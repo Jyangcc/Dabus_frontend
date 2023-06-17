@@ -95,15 +95,14 @@ const Reminder = props => {
         
         <TouchableOpacity 
           onPress={() => dispatch({
-            typeremoveReminder}
-            
-          )} 
+            type: 'removeReminder',
+            id: props.id
+          })} 
           style={Noti_styles.del} 
         >
           <MaterialIcons style={Noti_styles.del_icon} name="alarm-off" size={45} color="black" />
           <Text style={Noti_styles.del_text}>取消提醒</Text>
         </TouchableOpacity>
-            
       </View>
 
       {expanded && ( 

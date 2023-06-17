@@ -23,7 +23,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
 import { useTheme } from 'react-native-paper';
-
+const screenWidth = Dimensions.get('window').width;
 
 // const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -38,30 +38,40 @@ function ProviderRoot(){
       backgroundColor :color,
     },
     headerTitleStyle: {
-      alignSelf: "start", 
-      fontSize: 16, 
-      backgroundColor: color
+      fontSize: 0
     },
     headerRight: () => (
       <Ionicons 
+        style={{zIndex:5, marginRight:10}}
         name="settings-sharp" 
-        size={24} 
+        size={28} 
         color="#FFF"
         onPress={() => navigation.navigate("Setting")}
       />
     ),
     headerLeft: () => (
-      <TouchableOpacity style = {[styles.container,{marginLeft:10}]} onPress={() => navigation.navigate("Home")}>
-        <MaterialCommunityIcons name="bus" size={40} color="#FFF" />
-        <Text style = {{fontSize: 24,fontWeight: "bold",color: "#FFF"}}> Dabus</Text>
-      </TouchableOpacity>
+      <View style={{flex : 0}}> 
+        <TouchableOpacity style = {{
+          flex: 1,
+          alignItems: "center",
+          flexDirection: "row",
+          marginBottom:0,
+          marginLeft:10, 
+          width: 150}} onPress={() => navigation.navigate("Home")}>
+          <MaterialCommunityIcons name="bus" size={40} color="#FFF" />
+          <Text style = {{fontSize: 24,fontWeight: "bold",color: "#FFF"}}> Dabus</Text>
+        </TouchableOpacity>
+
+      </View>
     ),
   });
 
   const headerOptions_Setting = ({ route, navigation }) => ({
     headerTintColor: "black",
     headerTitleStyle: { alignSelf: "center", fontSize: 16 },
-    
+    headerTitleStyle: {
+      fontSize: 0
+    },
     headerRight: () => (
       <Button 
         title="Back " 
@@ -152,6 +162,7 @@ function MainFlow({navigation}){
     </Stack.Navigator>
   )
 }
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   
@@ -160,12 +171,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   treePercentscss :{
-    fontSize:50, 
+    fontSize:70, 
     alignItems: 'center', 
     justifyContent: 'center',
     position : 'absolute',
-    top:400,
-
+    top:screenHeight*0.45,
+    color:'#fff8'
   },
   container: {
     flex: 1,
@@ -216,9 +227,6 @@ function Home({navigation}){
 
       </View>
       <Weather style={{zIndex:2,}} />
-    
-      <Text style={{zIndex:2,}} >color {color}</Text>
-      
       <Fruit style={{zIndex:0,}}  /> 
 
     </View>

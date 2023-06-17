@@ -4,13 +4,11 @@ import {Animated, PanResponder} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import {Ionicons} from '@expo/vector-icons/Ionicons';
+
+import Bus_tile from './Bus_tile.js';
 const BusDetailCard = () => {
 
     return (
-        // <View style = {styles.container}>
-        //   <Text style={styles.text}>This is a card</Text>
-        //   <Text>This is another card</Text>
-        // </View>
         <View>
           <Text>bus card</Text>
           <Bus_card></Bus_card>
@@ -93,6 +91,7 @@ const Bus_card = () => {
           </ScrollView>
         </View>
       </Animated.View>
+
     </View>
   );
 };
@@ -128,130 +127,5 @@ const Bus_card_styles = StyleSheet.create({
 },
 });
 
-
-const Bus_tile = (props) => {
-  const [remind, setremind] = useState(false);
-
-  const handleSetRemindPress = () => {
-    setremind(!remind);
-  };
-  return(
-    <TouchableOpacity onPress={handleSetRemindPress} style={Bus_tile_styles.container}>
-      <Ionicons style={Bus_tile_styles.bus_icon} name="ios-bus" size={45} color="blue" />
-      <View style={Bus_tile_styles.bus_and_del}>
-        
-        <View style={Bus_tile_styles.bus}>
-          <Text style={Bus_tile_styles.text2}>{props.bus_name}
-            <Text style={Bus_tile_styles.text1}>往 <Text style={Bus_tile_styles.text2}>{props.dest}</Text></Text>
-          </Text> 
-          <Text>
-            <Text style={Bus_tile_styles.text4}> 將在 </Text> 
-            <Text style={Bus_tile_styles.text3}>{props.arrive_time} </Text>
-            <Text style={Bus_tile_styles.text4}>分鐘後抵達 </Text>
-            <Text style={Bus_tile_styles.text5}>{props.depart_stop} </Text>            
-          </Text>
-        </View>
-        
-        <TouchableOpacity onPress={handleSetRemindPress} style={Bus_tile_styles.del} >
-          <MaterialIcons style={Bus_tile_styles.icon} name="alarm" size={45} color={remind?"black":"gray"} />
-        </TouchableOpacity>
-      </View>   
-    </TouchableOpacity>
-  );
-};
-
-const Bus_tile_styles =  StyleSheet.create({
-  bus_tile:{
-    zIndex:100,
-  },
-  container: {
-    width: 345,
-    justifyContent: 'center',
-    marginRight:20,
-    marginLeft:20,
-    marginTop:10,
-    paddingTop:10,
-    paddingBottom:10,
-    backgroundColor:'#D9D9D9',
-    borderRadius:10,
-    borderWidth: 1,
-    borderColor: '#fff',
-    flexDirection:"row"
-
-  },
-  bus_and_del:{
-    marginLeft:0,
-    marginRight:10,
-    marginBottom:10,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position:'relative'
-  },
-  text1:{
-    marginLeft:0,
-    marginRight:10,
-    marginBottom:10,
-    fontSize:18,
-    color:"#000000",
-  },
-  text2:{
-    marginLeft:0,
-    marginRight:10,
-    marginBottom:10,
-    fontSize:22,
-    color:"#0072B2",
-  },
-  text3:{
-    marginLeft:0,
-    marginRight:0,
-    marginTop:5,
-    marginBottom:0,
-    fontSize:16,
-    color:"#0072B2",
-  },
-  text4:{
-    marginLeft:0,
-    marginRight:10,
-    marginBottom:0,
-    fontSize:16,
-    color:"#000000",
-  },
-  text5:{
-    marginLeft:10,
-    marginRight:10,
-    marginBottom:0,
-    fontSize:16,
-    color:"#0072B2",
-  },
-  text6:{
-    marginLeft:10,
-    marginRight:10,
-    marginBottom:0,
-    fontSize:16,
-    color:"#000000",
-  },
-  del:{
-    margin:0,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginButton:20,
-  },
-  icon:{
-    marginTop: 5,
-  },
-  del_text:{
-
-  },
-  bus:{
-    marginLeft:0,
-    marginRight:10,
-  },
-  bus_icon:{
-    marginTop:5,
-    marginRight:5,
-  }
-});
 
 export default BusDetailCard;

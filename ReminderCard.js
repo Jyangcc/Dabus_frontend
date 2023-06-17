@@ -10,7 +10,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import {useData, useDataDispatch} from './DataContext.js'
 
 const Reminder = props => {
-  
+  const {reminder} = useData();
+  const dispatch = useDataDispatch();
   const [expanded, setExpanded] = useState(false);
   const [del, setdel] = useState(false);
 
@@ -70,7 +71,7 @@ const Reminder = props => {
     {key:'7', value:'30'},
   ]
 
-  const hour_data = [...Array(11).keys()];
+  const hour_data = [...Array(12).keys()];
 
   const minute_data = [...Array(60).keys()];
 
@@ -88,11 +89,17 @@ const Reminder = props => {
             <Text style={Noti_styles.toptext4}> 離抵達 </Text> 
           {props.from}</Text>
           <Text style={Noti_styles.toptext3}>還剩 
-          <Text style={Noti_styles.toptext5}> {props.arrive_time} </Text>
+          <Text style={Noti_styles.toptext5}> {/*TODO*/'5'} </Text>
           分鐘</Text>
         </View>
         
-        <TouchableOpacity onPress={/*TODO*/handleDelPress} style={Noti_styles.del} >
+        <TouchableOpacity 
+          onPress={() => dispatch({
+            typeremoveReminder}
+            
+          )} 
+          style={Noti_styles.del} 
+        >
           <MaterialIcons style={Noti_styles.del_icon} name="alarm-off" size={45} color="black" />
           <Text style={Noti_styles.del_text}>取消提醒</Text>
         </TouchableOpacity>

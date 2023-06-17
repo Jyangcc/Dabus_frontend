@@ -8,8 +8,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TextInputDestination from './Text_Input.js';
 import Setting_Page from './Setting_Page.js';
 import BusDetailContainer from './BusDetailContainer.js';
-
 import RecentSearchList from './RecentSearchList.js';
+import { useData, useDataDispatch, DataProvider } from './DataContext.js'; 
+import ReminderList from './ReminderList.js';
+import FavoriteList from './FavoriteList.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,7 +20,7 @@ const Deep_stack = createNativeStackNavigator();
 function Root(){
   return(
     <Tab.Navigator screenOptions={{ headerShown: false }} initialRouteName="Main">
-        <Tab.Screen name="Notification" component={NotificationScreen} />
+        <Tab.Screen name="Reminder" component={ReminderScreen} />
 
         <Tab.Screen name="Main" component={MainFlow} />
 
@@ -28,10 +30,11 @@ function Root(){
 }
 
 function MainFlow({navigation}){
-  const {settings, setSettings} = useSettings();
+  const {settings:{language}} = useData();
+  const homeName = language === 'chinese' ? '首頁' : 'Home';
   return(
-    <Stack.Navigator initialRouteName = "Home">
-        <Stack.Screen name = {settings.language === 'chinese' ? "首頁" : 'Home'} component={Home} />
+    <Stack.Navigator initialRouteName = {homeName}>
+        <Stack.Screen name = {homeName} component={Home} />
         <Stack.Screen name = "Search" component={Search}/>
         <Stack.Screen name = "BusDtail" component={BusDetail}/>
 
@@ -40,16 +43,14 @@ function MainFlow({navigation}){
 }
 
 function Home({navigation}){
-  const {settings, setSettings} = useSettings();
+  const {settings:{color}} = useData();
   return(
     <View>
-      {/* <View  style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: settings.theme === 'dark' ? '#222' : '#FFF'}}>
-        <Text>this is Home</Text>
-      </View> */}
-      
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Button title="Go to Search" onPress={() => navigation.navigate('Search')} />
       </View>
+      <Text>{color}</Text>
+      
       
     </View>
   )
@@ -84,16 +85,12 @@ function BusDetail({navigation}) {
   );
 }
 
-function NotificationScreen({navigation}) {
+function ReminderScreen({navigation}) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Notification Screen</Text>
-      <Button
-        title="Go to Notification... again"
-        onPress={() => navigation.push('Notification')}
-      />
-      <Button title="Go to Main" onPress={() => navigation.navigate('Main')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      <Text>Reminder Screen</Text>
+
+      <ReminderList/>
 
     </View>
   );
@@ -101,18 +98,13 @@ function NotificationScreen({navigation}) {
 
 function FavoriteScreen({navigation}){
   return(
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center',  }}>
       <Text>Favorite Screen</Text>
-      <Button
-        title="Go to Favorite... again"
-        onPress={() => navigation.push('Favorite')}
-      />
-      <Button title="Go to Main" onPress={() => navigation.navigate('Main')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
+      
+      <FavoriteList/>
     </View>
   );
 }
-
 
 const headerOptions_Root = ({ route, navigation }) => ({
   headerTintColor: "black",
@@ -145,18 +137,9 @@ const headerOptions_Setting = ({ route, navigation }) => ({
   ), 
 });
 
-// const initialSettings = {theme: 'light', language: 'chinese', color: 'blue'};
-// const Settings = createContext(initialSettings);
-// export function useSettings() {
-//   return useContext(Settings);
-// }
-
-
 function App() {
-  const [settings, setSettings] = useState(initialSettings);
-  
   return (
-    <Settings.Provider value={{settings, setSettings}}>
+    <DataProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Root">
 
@@ -166,7 +149,7 @@ function App() {
 
         </Stack.Navigator>
       </NavigationContainer>
-    </Settings.Provider>
+    </DataProvider>
     // The name must be unique
   );
 } 

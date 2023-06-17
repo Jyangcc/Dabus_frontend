@@ -20,11 +20,11 @@ export function DataProvider({ children }) {
 }
 
 export function useData() {
-  return useContext(dataContext);
+  return useContext(DataContext);
 }
 
 export function useDataDispatch() {
-  return useContext(dataDispatchContext);
+  return useContext(DataDispatchContext);
 }
 
 function dataReducer(data, action) {
@@ -35,16 +35,18 @@ function dataReducer(data, action) {
         theme: data.settings.theme === 'dark' ? 'light' : 'dark'
       }};
     }
-    case 'toggleLanguage': {
+    case 'setLanguage': {
       return {...data, settings: {
         ...data.settings,
-        language: data.settings.language === 'english' ? 'chinese' : 'english'
+        language: action.language
       }};
     }
     case 'setColor': {
+      console.log(data.settings.color)
+      console.log(action.color)
       return {...data, settings: {
         ...data.settings,
-        color: data.settings.color === action.color
+        color: action.color
       }};
     }
     case 'addtreePercents':{
@@ -166,7 +168,7 @@ function dataReducer(data, action) {
 let nextid = 1;
 
 const initialData = {
-  settings: {theme: 'light', language: 'chinese', color: 'blue'},
+  settings: {theme: 'light', language: 'english', color: '#07B'},
   favorite: [
     'name',
   ],
@@ -182,7 +184,26 @@ const initialData = {
       type: 'on', //on, off (from bus)
       repeat: {
         0: false,
-        1: false,
+        1: true,
+        2: false, 
+        3: false, 
+        4: false, 
+        5: false, 
+        6: false
+      },
+      hour: 18,
+      minute: 30,
+      remind: 10
+    },
+    {
+      id : 1,
+      bus: 'Bus3',
+      from: 'Here',
+      to: 'There',
+      type: 'on', //on, off (from bus)
+      repeat: {
+        0: false,
+        1: true,
         2: false, 
         3: false, 
         4: false, 

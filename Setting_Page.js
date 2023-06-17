@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import SwitchSelector from "react-native-switch-selector";
+import { useData, useDataDispatch } from './DataContext.js';
 
 import {
   SafeAreaView, 
@@ -12,14 +13,11 @@ import {
   Button, 
   Switch
 } from 'react-native';
-import { useSettings } from './App.js';
-
-
 
 const Setting_Page = () => {
-  const {settings, setSettings} = useSettings();
-  const {theme, language, color} = settings;
-    
+  const {settings: {theme, language, color}} = useData();
+  const dispatch = useDataDispatch();
+  
   // need to be dynamic later
   const colors = [
     {id: 0, value: '#7BF'},
@@ -128,9 +126,8 @@ const Setting_Page = () => {
               // onValueChange={handle}
               value={theme === 'dark'}
               onValueChange={() => {
-                setSettings({
-                    ...settings,
-                    theme: theme === 'dark' ? 'light' : 'dark'
+                dispatch({
+                  type: 'toggleTheme'
                 })
               }}
             />
@@ -145,12 +142,13 @@ const Setting_Page = () => {
                 data={['中文', 'English']}
 
                 onSelect={selectedItem => {
-                  setSettings({
-                    ...settings,
-                    language: selectedItem === 'English' 
-                    ? 'english'
-                    : 'chinese'
+                  dispatch({ 
+                    type : 'setLanguage',
+                    language : selectedItem === 'English' ? 'english' :'chinese'
                   })
+                  console.log("select language")
+                  console.log(selectedItem)
+                  
                 }}
 
                 defaultButtonText={language === 'english' ? 'English' : '中文'}
@@ -168,17 +166,17 @@ const Setting_Page = () => {
             <View style={styles['container_' + theme]}>
               {
                 colors.map(c => 
-                    <TouchableOpacity
-                      key={c.id}
-                        onPress={() =>
-                            setSettings({
-                                ...settings,
-                                color: c.value
-                            })
-                        }
-                        style={styles['roundButton' + c.id]}>
-                        <Text>{c.value}</Text>
-                    </TouchableOpacity>
+                  <TouchableOpacity
+                    key={c.id}
+                      onPress={() =>
+                        dispatch({
+                          type : 'setColor',
+                          color : c.value,
+                        })
+                      }
+                      style={styles['roundButton' + c.id]}>
+                      <Text>{c.value}</Text>
+                  </TouchableOpacity>
                 )
               }
               

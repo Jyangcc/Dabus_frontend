@@ -49,10 +49,21 @@ function dataReducer(data, action) {
     }
     case 'addtreePercents':{
       if (data.treePercents + action.treePercents > 100) {
-        data.colors.map
+        const newColor = data.colors.find(c.unlocked === false);
         return {
           ...data,
-          treePercents: 0
+          treePercents: 0,
+          newColor: newColor,
+          colors: data.colors.map(c => {
+            if (c.color === newColor.color)  
+              return {
+                ...c,
+                unlocked: true
+              }
+            else 
+              return c;
+          }
+          )
         }
       }
       else{
@@ -177,7 +188,8 @@ function dataReducer(data, action) {
     case 'hideFruit': {
       return {
         ...data,
-        showFruit: false
+        showFruit: false,
+        treePercents: 0
       }
     }
     default: {
@@ -242,6 +254,7 @@ const initialData = {
   ],
   treePercents: 30,
   showFruit: false,
+  newColor: null,
   colors: [
     {color: '#07B', unlocked: true},
     {color: '#D83', unlocked: false},

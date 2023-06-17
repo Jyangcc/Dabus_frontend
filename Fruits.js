@@ -23,7 +23,6 @@ const Fruit = () => {
 
     return(
         <View style={{top:0,position:"absolute",width:screenWidth,height:screenHeight}}>
-            <Text>{showFruit ? "There's the fruit": 'Where is my fruit???'}</Text>
             {(expand)&&
             <TouchableOpacity style={[styles.congrat,{backgroundColor:newColor,width:screenWidth,height:screenHeight,zIndex:1}]}  onPress={() => {setExpand(!expand),dispatch({type: 'hideFruit'}), console.log(newColor)}}>
             </TouchableOpacity>}
@@ -32,7 +31,6 @@ const Fruit = () => {
             <TouchableOpacity style={{position:"absolute",right:screenWidth/2,zIndex:10}} onPress={() => {setExpand(!expand);}}>
                 <MaterialCommunityIcons style={styles.fruit} name="fruit-cherries" size={40} color="red"/>
             </TouchableOpacity>}
-            <Text>{expand?'What\'s this?':'Where\'s the block'}</Text>
         </View>
         
     )

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createContext, useContext, useReducer} from 'react';
-import { View, Text, Button,StyleSheet, Switch,ScrollView,Dimensions } from 'react-native';
+import { View, Text, Button,StyleSheet,TouchableOpacity,Image, Switch,ScrollView,Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
@@ -20,8 +20,13 @@ import { Feather } from '@expo/vector-icons';
 
 import { Ionicons } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-const Tab = createBottomTabNavigator();
+import { useTheme } from 'react-native-paper';
+
+
+// const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const Deep_stack = createNativeStackNavigator();
 
@@ -46,10 +51,10 @@ function ProviderRoot(){
       />
     ),
     headerLeft: () => (
-      <View style = {[styles.container,{marginLeft:10}]}>
+      <TouchableOpacity style = {[styles.container,{marginLeft:10}]} onPress={() => navigation.navigate("Home")}>
         <MaterialCommunityIcons name="bus" size={40} color="#FFF" />
         <Text style = {{fontSize: 24,fontWeight: "bold",color: "#FFF"}}> Dabus</Text>
-      </View>
+      </TouchableOpacity>
     ),
   });
 
@@ -80,11 +85,21 @@ function ProviderRoot(){
 
 function Root(){
   const {settings: {color}} = useData();
-  
+  const theme = useTheme();
+  theme.colors.secondaryContainer = "transperent";
+
   return(
     <Tab.Navigator 
+      barStyle={{ backgroundColor: color }}
+      activeColor="#f0edf6"
+      inactiveColor="#3e2465"
+      // labeled = {true}
+      shifting = {true}
+      
+
       screenOptions={{ 
         headerShown: false,
+        
         tabBarStyle:{
           backgroundColor: color,
           height:100,
@@ -95,12 +110,12 @@ function Root(){
         }
       }} 
       initialRouteName="Main"
-      tabBarActiveTintColor = "#FF9"
-      tabBarInactiveTintColo = "#F99"
+      // tabBarActiveTintColor = "#559"
+      // tabBarInactiveTintColo = "#333"
       >
         <Tab.Screen name="Favorite" component={FavoriteScreen}
         options={{ 
-          tabBarIcon:() => <Feather name="star" size={40} color="white" />
+          tabBarIcon:() => <Feather name="star" size={30} color="white" />
         }} 
         />
 
@@ -109,7 +124,7 @@ function Root(){
           component={MainFlow} 
           options={{
             tabBarIcon: () => 
-            <Ionicons name="home-outline" size={40} color="white" />
+            <Ionicons name="home-outline" size={30} color="white" />
           }}
         />
 
@@ -117,7 +132,7 @@ function Root(){
           name="Reminder" 
           component={ReminderScreen}  
           options={{ 
-            tabBarIcon:() => <Ionicons name="notifications-outline" size={40} color="white"  />
+            tabBarIcon:() => <Ionicons name="notifications-outline" size={30} color="white"  />
           }} 
         />
     </Tab.Navigator> 
@@ -165,6 +180,8 @@ function Home({navigation}){
   const {settings:{color}} = useData();
   const {treePercents} = useData();
   const dispatch = useDataDispatch();
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   return(
     <View>
@@ -182,8 +199,13 @@ function Home({navigation}){
           onPress={() => navigation.navigate("Setting")}
         />}
       />    */}
+
+      <Image style={{zIndex:1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.8}} source={require('./images/tree.png')} />
+
+      <Image style={{zIndex:0, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.8}} source={require('./images/ground.png')} />
+
       <View style={{ zIndex:2, alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="Go to Search" onPress={() => navigation.navigate('Search')} />
+        <TouchableOpacity style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6}} onPress={() => navigation.navigate('Search')} />
 
         <Text onPress={() =>dispatch({
           type :'addTreePercents',
@@ -194,16 +216,11 @@ function Home({navigation}){
 
       </View>
       <Weather style={{zIndex:2,}} />
-      <Button style={{zIndex:2,}} title="Click me to add 30 tree" 
-      onPress={() =>dispatch({
-          type :'addTreePercents',
-          treePercents :30
-      })}/>
     
-
       <Text style={{zIndex:2,}} >color {color}</Text>
       
-      <Fruit style={{zIndex:0,}}  />      
+      <Fruit style={{zIndex:0,}}  /> 
+
     </View>
   )
 }

@@ -8,14 +8,13 @@ import BusDetailCard from './BusDetailCard';
 const BusDetailContainer = () => {
     
     return (
-      <View style={styles.container}>
+      <View >
         
         {/* <Animated.ScrollView pagingEnabled style={styles.container}>
           <BusDetailCard title={'PAGE 1 '} index={0} />
           <BusDetailCard title={'PAGE 2'} index={1} />
         </Animated.ScrollView> */}
-        <BusDetailCard/>
-        <BusDetailCard/>
+        
         <BusDetailCard/>
 
 

@@ -1,29 +1,40 @@
 import React from 'react';
-import {SafeAreaView,TouchableOpacity, StyleSheet, TextInput,Text, View} from 'react-native';
+import {SafeAreaView,TouchableOpacity, StyleSheet, TextInput,Text, View, TouchableWithoutFeedback} from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Feather } from '@expo/vector-icons'; 
 import { FontAwesome } from '@expo/vector-icons'; 
+import { useState  } from 'react'; 
+import {useData, useDataDispatch} from './DataContext.js'
 
 
 
-const RecentSearchCard = () => {
+const RecentSearchCard = props => {
+  const {favorite} = useData();
+  const dispatch = useDataDispatch();
 
-  const destination = [
-    {name : 'first stop', favorite : true},
-    {name : 'second stop', favorite : true},
-    {name : 'third stop', favorite : false},
-  ]
+  const [isFav, setIsFav] = useState(favorite.includes(props.name));
 
   return (
-    <View >
+    <View>
       <View style={styles.container}>
-        <Text style = {styles.busstop}>{destination[0].name}</Text>
-        {/* <TouchableOpacity onPress={() =>console.log("Press a button")} 
-          style = {styles.roundButtonOff}
-        /> */}
-        <Feather style = {styles.roundButtonOff} name="star" size={24} color="black" />
+        <Text style = {styles.busstop}>{props.name}</Text>
+        
+        <TouchableOpacity 
+          onPress={() => {
+            dispatch({
+              type: isFav ? 'removeFavorite' : 'addFavorite',
+              name : props.name
+            });
+            setIsFav(!isFav);
+          }}
+          style = {styles.roundButton}>
+          {
+            isFav 
+            ? <FontAwesome name="star" size={24} color="yellow"/> 
+            : <Feather name="star" size={24} color="black"/>
+          }
+        </TouchableOpacity>
 
-        {/* <FontAwesome style = {styles.roundButtonOff} name="star" size={24} color="yellow" /> */}
       </View>
 
     </View>
@@ -32,31 +43,24 @@ const RecentSearchCard = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:20,
+    marginTop:30,
     marginBottom:20,
+    paddingBottom:20,
     backgroundColor: "#DDD",
     alignItems: "center",
     flexDirection: "row",
   },
-  roundButtonOn: {
+  roundButton: {
     marginLeft:330,
-    position : "absolute",
-  },
-  roundButtonOff: {
-    marginLeft:330,
-    // width: 40,
-    // height: 40,
-    // borderRadius: 100,
     position : "absolute",
   },
 
   busstop:{
     marginLeft:20,
     fontSize:20,
-    backgroundColor: '#198',
+    backgroundColor: '#DDD',
+    paddingTop:10,
   }
 });
-
-
 
 export default RecentSearchCard;

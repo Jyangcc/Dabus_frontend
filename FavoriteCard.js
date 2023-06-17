@@ -22,17 +22,17 @@ const FavoriteCard = props => {
       //
     };
     const handleDelPress = () => {
-      console.log(props)
+      // console.log(props)
       dispatch({
         type: 'removeFavorite',
-        props 
+        name : props.name
       })
     };
     return(
       <TouchableOpacity onPress={handleSearchPress} style={Fav_styles.fav}>
         <View style={Fav_styles.bus_and_del}>
           <View style={Fav_styles.bus}>
-            <Text style={Fav_styles.text1}>前往: <Text style={Fav_styles.text2}>{props.fav}</Text></Text>
+            <Text style={Fav_styles.text1}>前往: <Text style={Fav_styles.text2}>{props.name}</Text></Text>
             
             <Text style={Fav_styles.text3}>{props.bus_name}
               <Text style={Fav_styles.text4}> 離抵達 </Text> 
@@ -139,10 +139,6 @@ const FavoriteCard = props => {
       marginLeft:0,
       marginRight:40,
     }
-  
-  
-  
-    
   });
   
 

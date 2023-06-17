@@ -6,10 +6,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { AntDesign } from '@expo/vector-icons'; 
 import { SelectList } from 'react-native-dropdown-select-list'
 import { MaterialIcons } from '@expo/vector-icons'; 
-import {useData, useDataDispatch} from './DataContext.js'
+import {useDataDispatch} from './DataContext.js'
 
 const Reminder = props => {
-  const {reminder} = useData();
   const dispatch = useDataDispatch();
 
   const [expanded, setExpanded] = useState(false);
@@ -93,14 +92,17 @@ const Reminder = props => {
             [...Array(7).keys()].map(day =>
               <TouchableOpacity 
                 onPress={
-                  () => dispatch({
-                    type: 'toggleReminderRepeatDay',
-                    day
-                  })
+                  () => {
+                    dispatch({
+                      type: 'toggleReminderRepeatDay',
+                      id: props.id,
+                      day: day
+                    });
+                  }
                 } 
                 style={[
                   Noti_styles.rpt_alarm_btn, 
-                  {backgroundColor: reminder[props.id].repeat[day] ? '#07B' : '#888'}
+                {backgroundColor: (props.repeat[day].on ? '#07B' : '#888')}
                 ]}>
                   <Text style={Noti_styles.rpt_alarm_day}>{chineseDay[day]}</Text>
                 </TouchableOpacity>
@@ -144,14 +146,11 @@ const Reminder = props => {
             <SelectList 
               style={Noti_styles.ampm_select}
               setSelected={val => {
-                reminder.map(rem => {
-                  if (rem.id == props.id)
-                    dispatch({
-                      type: 'setReminderHour',
-                      hour: reminder === 'am' 
-                        ? rem.hour % 12 
-                        : rem.hour % 12 + 12
-                    })
+                dispatch({
+                  type: 'setReminderHour',
+                  hour: val === 'am' 
+                    ? props.hour % 12 
+                    : props.hour % 12 + 12
                 })
               }}
               data={ampm_data} 

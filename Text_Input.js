@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, TextInput,View} from 'react-native';
+import {SafeAreaView,ScrollView, StyleSheet, TextInput,View} from 'react-native';
 
 
 
@@ -12,16 +12,20 @@ const TextInputDestination = (props) => {
 
   return (
     <SafeAreaView>
-
+      {/* <ScrollView style={{height: 10}} keyboardShouldPersistTaps = {true}> */}
         <TextInput
           style={styles.input}
           onChangeText={setText}
           placeholder="Go To ..."
           keyboardType="default"
           autoFocus={true}
+          blurOnSubmit={false}
           value={text}
           onSubmitEditing={findDestination}
         />
+
+      {/* </ScrollView> */}
+
         
 
     </SafeAreaView>

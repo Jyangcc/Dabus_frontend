@@ -42,8 +42,8 @@ function dataReducer(data, action) {
       }};
     }
     case 'setColor': {
-      console.log(data.settings.color)
-      console.log(action.color)
+      // console.log(data.settings.color)
+      // console.log(action.color)
       return {...data, settings: {
         ...data.settings,
         color: action.color
@@ -67,24 +67,32 @@ function dataReducer(data, action) {
     case 'addFavorite':{
       return {
         ...data, 
-        favorite : data.favorite.push(action.favorite)
+        favorite : [
+          ...data.favorite,
+          action.name
+        ]
       };
+     
     }
     case 'removeFavorite':{
       return {
         ...data, 
         favorite: data.favorite.filter(fav =>
-          fav !== action.props.fav
+          fav !== action.name
         )
       };
     }
     case 'addReminder':{
       return {
         ...data, 
-        reminder: data.reminder.push({
-          ...action.reminder,
-          id: nextid++
-        }),
+        reminder :[
+          ...data.reminder,
+          {
+            ...action.reminder,
+            id: nextid++
+          }
+        ]
+        
       };
     }
     case 'removeReminder':{
@@ -120,15 +128,24 @@ function dataReducer(data, action) {
       };
     }
     case 'toggleReminderRepeatDay':{
+      console.log('Toggling ', action.day);
       return {
         ...data, 
         reminder: data.reminder.map(rem => {
-            if (rem.id === action.id) 
-              return Object.fromEntries(
-                Object.entries(rem.repeat).map(
-                  ([day, on]) => [day, (on => !on)(on)]
-                )
-              )
+            if (rem.id === action.id) {
+              return {
+                ...rem,
+                repeat: rem.repeat.map(rep => {
+                  if (rep.day === action.day)
+                    return {
+                      ...rep,
+                      on: !rep.on
+                    }
+                  else 
+                    return rep;
+                })
+              }
+            }
             else 
               return rem;
           }
@@ -176,7 +193,10 @@ const initialData = {
     'stop 4',
   ],
   recentlySearched: [
-    'name',
+    '陳正霖',
+    'ycc',
+    'cc',
+    'hiiiiiiiiiii'
   ],
   reminder: [
     {
@@ -184,16 +204,15 @@ const initialData = {
       bus: 'Bus1',
       from: 'Here',
       to: 'There',
-      type: 'on', //on, off (from bus)
-      repeat: {
-        0: false,
-        1: true,
-        2: false, 
-        3: false, 
-        4: false, 
-        5: false, 
-        6: false
-      },
+      repeat: [
+        {day: 0, on: false},
+        {day: 1, on: false},
+        {day: 2, on: false},
+        {day: 3, on: false},
+        {day: 4, on: false},
+        {day: 5, on: false},
+        {day: 6, on: false},
+      ],
       hour: 18,
       minute: 30,
       remind: 10
@@ -203,16 +222,15 @@ const initialData = {
       bus: 'Bus3',
       from: 'Here',
       to: 'There',
-      type: 'on', //on, off (from bus)
-      repeat: {
-        0: false,
-        1: true,
-        2: false, 
-        3: false, 
-        4: false, 
-        5: false, 
-        6: false
-      },
+      repeat: [
+        {day: 0, on: false},
+        {day: 1, on: false},
+        {day: 2, on: false},
+        {day: 3, on: false},
+        {day: 4, on: false},
+        {day: 5, on: false},
+        {day: 6, on: false},
+      ],
       hour: 18,
       minute: 30,
       remind: 10

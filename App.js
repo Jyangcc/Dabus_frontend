@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createContext, useContext, useReducer} from 'react';
-import { View, Text, Button, Switch } from 'react-native';
+import { View, Text, Button, Switch,ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScreenStackHeaderBackButtonImage } from 'react-native-screens';
@@ -12,10 +12,12 @@ import RecentSearchList from './RecentSearchList.js';
 import { useData, useDataDispatch, DataProvider } from './DataContext.js'; 
 import ReminderList from './ReminderList.js';
 import FavoriteList from './FavoriteList.js';
+import Checkbox from './CheckBox.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const Deep_stack = createNativeStackNavigator();
+// const {treePercents} = useData();
 
 function Root(){
   return(
@@ -48,8 +50,11 @@ function Home({navigation}){
     <View>
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Button title="Go to Search" onPress={() => navigation.navigate('Search')} />
+        {/* <Text>{treePercents}</Text> */}
       </View>
       <Text>{color}</Text>
+
+      {/* <Checkbox/> */}
       
       
     </View>
@@ -60,16 +65,19 @@ function Search({navigation}){
   const busStops = {123: false, 345: false, 567: false};
   return(
     <View>
+      <ScrollView style={{height: 300}} keyboardShouldPersistTaps = 'always'>
 
-      <View  style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <TextInputDestination busStops={busStops}/>
-      </View>
+        <View  style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <TextInputDestination busStops={busStops}/>
 
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="Go to BusDtail" onPress={() => navigation.navigate('BusDtail')} />
-      </View>
-      <RecentSearchList/>
+        </View>
 
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <Button title="Go to BusDtail" onPress={() => navigation.navigate('BusDtail')} />
+        </View>
+        <RecentSearchList/>
+
+      </ScrollView>
     </View>
   )
 }
@@ -91,6 +99,7 @@ function ReminderScreen({navigation}) {
       <Text>Reminder Screen</Text>
 
       <ReminderList/>
+      
 
     </View>
   );

@@ -47,23 +47,27 @@ function dataReducer(data, action) {
         color: action.color
       }};
     }
-    case 'addtreePercents':{
-      if (data.treePercents + action.treePercents > 100) {
-        const newColor = data.colors.find(c.unlocked === false);
-        return {
-          ...data,
-          treePercents: 0,
-          newColor: newColor,
-          colors: data.colors.map(c => {
-            if (c.color === newColor.color)  
-              return {
-                ...c,
-                unlocked: true
-              }
-            else 
-              return c;
+    case 'addTreePercents':{
+      if (data.treePercents + action.treePercents >= 100) {
+        const newColor = data.colors.find(c => c.unlocked === false);
+        if (newColor) 
+          return {
+            ...data,
+            showFruit: true,
+            newColor: newColor.color,
+            colors: data.colors.map(c => {
+              if (c.color === newColor.color)  
+                return {
+                  ...c,
+                  unlocked: true
+                }
+              else 
+                return c;
+            })
           }
-          )
+        else {
+          console.log('Not enough colors!');
+          return data;
         }
       }
       else{

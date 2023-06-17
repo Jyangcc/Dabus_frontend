@@ -15,16 +15,9 @@ import {
 } from 'react-native';
 
 const Setting_Page = () => {
-  const {settings: {theme, language, color}} = useData();
+  const {settings: {theme, language, color}, colors} = useData();
   const dispatch = useDataDispatch();
   
-  // need to be dynamic later
-  const colors = [
-    {id: 0, value: '#7BF'},
-    {id: 1, value: '#8F7'},
-    {id: 2, value: '#FB7'}
-  ];
-
   const styles = StyleSheet.create({
     input: {
       height: 20,
@@ -47,7 +40,7 @@ const Setting_Page = () => {
     //     }
     //   }, {})
     // ),
-    roundButton0: {
+    roundButton: {
       marginLeft:20,
       width: 40,
       height: 40,
@@ -55,30 +48,7 @@ const Setting_Page = () => {
       alignItems: 'center',
       padding: 10,
       borderRadius: 100,
-      backgroundColor: '#7BF',
     },
-    roundButton1: {
-      marginLeft:20,
-      // marginTop: 20,
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 10,
-      borderRadius: 100,
-      backgroundColor: '#BF7',
-    }, 
-    roundButton2: {
-      marginLeft:20,
-      // marginTop: 20,
-      width: 40,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 10,
-      borderRadius: 100,
-      backgroundColor: '#FB7',
-    }, 
     container_darkmode: {
       marginTop:10,
       backgroundColor: "#DDD",
@@ -165,19 +135,20 @@ const Setting_Page = () => {
             
             <View style={styles['container_' + theme]}>
               {
-                colors.map(c => 
+                colors.map(c => (
+                  c.unlocked &&
                   <TouchableOpacity
-                    key={c.id}
+                    key={c.color}
                       onPress={() =>
                         dispatch({
                           type : 'setColor',
-                          color : c.value,
+                          color : c.color,
                         })
                       }
-                      style={styles['roundButton' + c.id]}>
-                      <Text>{c.value}</Text>
+                      style={[styles.roundButton, {backgroundColor: c.color}]}>
+                      <Text>{c.color}</Text>
                   </TouchableOpacity>
-                )
+                ))
               }
               
             </View>

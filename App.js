@@ -14,7 +14,7 @@ import ReminderList from './ReminderList.js';
 import FavoriteList from './FavoriteList.js';
 import Checkbox from './CheckBox.js';
 import Weather from './Weather.js';
-import Fruit from './Fruit.js';
+import Fruit from './Fruits.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -49,17 +49,30 @@ function MainFlow({navigation}){
 function Home({navigation}){
   const {settings:{color}} = useData();
   const {treePercents} = useData();
+  const dispatch = useDataDispatch();
 
   return(
     <View>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ zIndex:2, alignItems: 'center', justifyContent: 'center' }}>
         <Button title="Go to Search" onPress={() => navigation.navigate('Search')} />
-        <Text style = {{fontSize:50, alignItems: 'center', justifyContent: 'center' }}>Tree {treePercents} %</Text>
-      </View>
-      <Weather/>
+        <Text onPress={() =>dispatch({
+          type :'addTreePercents',
+          treePercents :30
+      })}
+      style = {{fontSize:50, alignItems: 'center', justifyContent: 'center' }}>Tree {treePercents} %</Text>
 
-      <Text >color {color}</Text>
-      <Fruit/>      
+      </View>
+      <Weather style={{zIndex:2,}} />
+      <Button style={{zIndex:2,}} title="Click me to add 30 tree" 
+      onPress={() =>dispatch({
+          type :'addTreePercents',
+          treePercents :30
+      })}/>
+    
+
+      <Text style={{zIndex:2,}} >color {color}</Text>
+      
+      <Fruit style={{zIndex:0,}}  />      
     </View>
   )
 }

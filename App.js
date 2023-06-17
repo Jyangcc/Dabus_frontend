@@ -13,6 +13,8 @@ import { useData, useDataDispatch, DataProvider } from './DataContext.js';
 import ReminderList from './ReminderList.js';
 import FavoriteList from './FavoriteList.js';
 import Checkbox from './CheckBox.js';
+import Weather from './Weather.js';
+import Fruit from './Fruit.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -46,17 +48,18 @@ function MainFlow({navigation}){
 
 function Home({navigation}){
   const {settings:{color}} = useData();
+  const {treePercents} = useData();
+
   return(
     <View>
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Button title="Go to Search" onPress={() => navigation.navigate('Search')} />
-        {/* <Text>{treePercents}</Text> */}
+        <Text style = {{fontSize:50, alignItems: 'center', justifyContent: 'center' }}>Tree {treePercents} %</Text>
       </View>
-      <Text>{color}</Text>
+      <Weather/>
 
-      {/* <Checkbox/> */}
-      
-      
+      <Text >color {color}</Text>
+      <Fruit/>      
     </View>
   )
 }

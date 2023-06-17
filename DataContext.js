@@ -42,8 +42,6 @@ function dataReducer(data, action) {
       }};
     }
     case 'setColor': {
-      // console.log(data.settings.color)
-      // console.log(action.color)
       return {...data, settings: {
         ...data.settings,
         color: action.color
@@ -51,7 +49,7 @@ function dataReducer(data, action) {
     }
     case 'addtreePercents':{
       if (data.treePercents + action.treePercents > 100) {
-        // TODO: handle fruit
+        data.colors.map
         return {
           ...data,
           treePercents: 0
@@ -176,6 +174,12 @@ function dataReducer(data, action) {
         )
       };
     }
+    case 'hideFruit': {
+      return {
+        ...data,
+        showFruit: false
+      }
+    }
     default: {
       throw Error('Unknown action: ' + action.type);
     }
@@ -237,4 +241,10 @@ const initialData = {
     },
   ],
   treePercents: 30,
+  showFruit: false,
+  colors: [
+    {color: '#07B', unlocked: true},
+    {color: '#D83', unlocked: false},
+    {color: '#56B', unlocked: false},
+  ],
 };

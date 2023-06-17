@@ -3,6 +3,7 @@ import {SafeAreaView,ScrollView, StyleSheet,TouchableOpacity,Dimensions, TextInp
 import {Animated, PanResponder} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
+import {Ionicons} from '@expo/vector-icons/Ionicons';
 const BusDetailCard = () => {
 
     return (
@@ -13,6 +14,7 @@ const BusDetailCard = () => {
         <View>
           <Text>bus card</Text>
           <Bus_card></Bus_card>
+          <Bus_tile></Bus_tile>
           <Text>bus card</Text>
         </View>
 

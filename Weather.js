@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, ScrollView,TouchableOpacity, TouchableHighlight,Dimensions, } from 'react-native';
-import { useState, useRef } from 'react';
+import { useState,useEffect, useRef } from 'react';
 import { Icon } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -30,17 +30,19 @@ const Weather = () => {
     return (
         <View style={styles.container}>
             <View style={styles.left}>
-                <View style={styles.location}>
-                    <Text>{weather.description}</Text>;
-                </View>
+                <Text style={styles.location}>
+                  {weather.description}
+                </Text>
+
                 <View style={styles.degree}>
                     <Text>
-                        {props.temp.toFixed(0) + 'C'}
+                        {weather.temp.toFixed(0) + ' C'}
                     </Text>
                 </View>
+                
             </View>
             <View style={styles.right}>
-                <Image style={styles.weather_icon}source={require('@expo/snack-static/react-native-logo.png')}/>
+                
                 <View style={styles.last_update}>
 
                 </View>

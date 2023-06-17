@@ -11,7 +11,7 @@ const FavoriteList = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollContainer}>
-                {favorite.map(rem => <FavoriteCard {...rem}/>)}
+                {favorite.map(fav => <FavoriteCard {...{fav}}/>)}
             </ScrollView>
         </SafeAreaView>
     );
@@ -20,7 +20,7 @@ const FavoriteList = () => {
 const styles = StyleSheet.create({
     container :{
         justifyContent :'center',
-        
+    
     },
     scrollContainer : {
         // marginLeft :10,

@@ -13,7 +13,7 @@ import {useData, useDataDispatch} from './DataContext.js'
 
 
 const FavoriteCard = props => {
-    const {favorite} = useData();
+    // const {favorite} = useData();
     const dispatch = useDataDispatch();
     const [del, setDel] = useState(false);
     const [search, setsearch] = useState(false);
@@ -22,12 +22,17 @@ const FavoriteCard = props => {
       //
     };
     const handleDelPress = () => {
+      console.log(props)
+      dispatch({
+        type: 'removeFavorite',
+        props 
+      })
     };
     return(
       <TouchableOpacity onPress={handleSearchPress} style={Fav_styles.fav}>
         <View style={Fav_styles.bus_and_del}>
           <View style={Fav_styles.bus}>
-            <Text style={Fav_styles.text1}>前往: <Text style={Fav_styles.text2}>{props.dest}</Text></Text>
+            <Text style={Fav_styles.text1}>前往: <Text style={Fav_styles.text2}>{props.fav}</Text></Text>
             
             <Text style={Fav_styles.text3}>{props.bus_name}
               <Text style={Fav_styles.text4}> 離抵達 </Text> 
@@ -36,11 +41,12 @@ const FavoriteCard = props => {
               <Text style={Fav_styles.text6}> {props.arrive_time} </Text>
               <Text style={Fav_styles.text4}>分鐘</Text>
             </Text>
+
           </View>
           
           <TouchableOpacity onPress={handleDelPress} style={Fav_styles.del} >
             <Ionicons style={Fav_styles.del_icon} name="heart-dislike-sharp" size={45} color="black" />
-            <Text style={Fav_styles.del_text } onPress={ console.log}>取消最愛</Text>
+            <Text style={Fav_styles.del_text } >取消最愛</Text>
           </TouchableOpacity>
         </View>   
       </TouchableOpacity>

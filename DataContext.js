@@ -71,13 +71,10 @@ function dataReducer(data, action) {
       };
     }
     case 'removeFavorite':{
-      console.log('remove favorite')
-      console.log(data.favorite)
-      console.log(action.favorite)
       return {
         ...data, 
         favorite: data.favorite.filter(fav =>
-          fav !== action.favorite
+          fav !== action.props.fav
         )
       };
     }
@@ -141,7 +138,7 @@ function dataReducer(data, action) {
     case 'setReminderBeforeTime':{
       return {
         ...data, 
-        reminder: reminder.map(rem => {
+        reminder: data.reminder.map(rem => {
             if (rem.id === action.id)
               return {...rem, remind: action.remind}
             else 
@@ -153,7 +150,7 @@ function dataReducer(data, action) {
     case 'setReminderType':{
       return {
         ...data, 
-        reminder: reminder.map(rem => {
+        reminder: data.reminder.map(rem => {
             if (rem.id === action.id)
               return {...rem, type: action.type};
             else 
@@ -176,6 +173,7 @@ const initialData = {
     'stop 1',
     'stop 2',
     'stop 3',
+    'stop 4',
   ],
   recentlySearched: [
     'name',

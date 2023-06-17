@@ -11,10 +11,8 @@ import {useData, useDataDispatch} from './DataContext.js'
 const Reminder = props => {
   const {reminder} = useData();
   const dispatch = useDataDispatch();
-  const [expanded, setExpanded] = useState(false);
-  const [del, setdel] = useState(false);
 
-  const setSelected = () => {};
+  const [expanded, setExpanded] = useState(false);
 
   const handleButtonPress = () => {
     setExpanded(!expanded);
@@ -72,7 +70,10 @@ const Reminder = props => {
           <Text style={Noti_styles.toptext6}>在公車抵達前 </Text>
           <SelectList 
             style={Noti_styles.time_select}
-            setSelected={(val) => setSelected(val)} 
+            setSelected={val => dispatch({
+              type: 'setReminderBeforeTime',
+              remind: val
+            })} 
             data={data} 
             save="value"
             search={false}
@@ -108,7 +109,10 @@ const Reminder = props => {
           <View style={Noti_styles.repeat_time_select}>
             <SelectList 
               style={Noti_styles.hour_select}
-              setSelected={(val) => setSelected(val)} 
+              setSelected={val => dispatch({
+                type: 'setReminderHour',
+                hour: val
+              })}
               data={hour_data} 
               save="value"
               search={false}
@@ -122,7 +126,10 @@ const Reminder = props => {
             <Text style={Noti_styles.repeat_select_text}> : </Text>
             <SelectList 
               style={Noti_styles.minute_select}
-              setSelected={(val) => setSelected(val)} 
+              setSelected={val => dispatch({
+                type: 'setReminderMinute',
+                minute: val
+              })} 
               data={minute_data} 
               save="value"
               search={false} 
@@ -136,7 +143,17 @@ const Reminder = props => {
             <Text style={Noti_styles.repeat_select_text}></Text>
             <SelectList 
               style={Noti_styles.ampm_select}
-              setSelected={(val) => setSelected(val)} 
+              setSelected={val => {
+                reminder.map(rem => {
+                  if (rem.id == props.id)
+                    dispatch({
+                      type: 'setReminderHour',
+                      hour: reminder === 'am' 
+                        ? rem.hour % 12 
+                        : rem.hour % 12 + 12
+                    })
+                })
+              }}
               data={ampm_data} 
               save="value"
               search={false}

@@ -71,6 +71,9 @@ function dataReducer(data, action) {
       };
     }
     case 'removeFavorite':{
+      console.log('remove favorite')
+      console.log(data.favorite)
+      console.log(action.favorite)
       return {
         ...data, 
         favorite: data.favorite.filter(fav =>
@@ -98,7 +101,7 @@ function dataReducer(data, action) {
     case 'setReminderHour':{
       return {
         ...data, 
-        reminder: reminder.map(rem => {
+        reminder: data.reminder.map(rem => {
             if (rem.id === action.id)
               return {...rem, hour: action.hour}
             else 
@@ -110,7 +113,7 @@ function dataReducer(data, action) {
     case 'setReminderMinute':{
       return {
         ...data, 
-        reminder: reminder.map(rem => {
+        reminder: data.reminder.map(rem => {
           if (rem.id === action.id)
             return {...rem, minute: action.minute}
           else 
@@ -122,7 +125,7 @@ function dataReducer(data, action) {
     case 'toggleReminderRepeatDay':{
       return {
         ...data, 
-        reminder: reminder.map(rem => {
+        reminder: data.reminder.map(rem => {
             if (rem.id === action.id) 
               return Object.fromEntries(
                 Object.entries(rem.repeat).map(
@@ -170,7 +173,9 @@ let nextid = 1;
 const initialData = {
   settings: {theme: 'light', language: 'english', color: '#07B'},
   favorite: [
-    'name',
+    'stop 1',
+    'stop 2',
+    'stop 3',
   ],
   recentlySearched: [
     'name',

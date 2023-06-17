@@ -19,7 +19,7 @@ import {useData} from './DataContext.js'
 const ReminderList = () => {
     const {reminder} = useData();
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollContainer}>
                 {reminder.map(rem => <ReminderCard {...rem}/>)}
             </ScrollView>
@@ -28,6 +28,12 @@ const ReminderList = () => {
   };
   
 const styles = StyleSheet.create({
+    container :{
+        justifyContent :'center',
+        alignContent :'center',
+        // marginRight:10,
+        
+    },
     scrollContainer : {
         // marginLeft :10,
         marginright:10,

@@ -8,10 +8,13 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { MaterialIcons } from '@expo/vector-icons'; 
 import { useRef } from 'react';
+import {useData, useDataDispatch} from './DataContext.js'
 
 
 
 const FavoriteCard = props => {
+    const {favorite} = useData();
+    const dispatch = useDataDispatch();
     const [del, setDel] = useState(false);
     const [search, setsearch] = useState(false);
   
@@ -19,7 +22,6 @@ const FavoriteCard = props => {
       //
     };
     const handleDelPress = () => {
-      //
     };
     return(
       <TouchableOpacity onPress={handleSearchPress} style={Fav_styles.fav}>
@@ -38,7 +40,7 @@ const FavoriteCard = props => {
           
           <TouchableOpacity onPress={handleDelPress} style={Fav_styles.del} >
             <Ionicons style={Fav_styles.del_icon} name="heart-dislike-sharp" size={45} color="black" />
-            <Text style={Fav_styles.del_text}>取消最愛</Text>
+            <Text style={Fav_styles.del_text } onPress={ console.log}>取消最愛</Text>
           </TouchableOpacity>
         </View>   
       </TouchableOpacity>
@@ -46,12 +48,14 @@ const FavoriteCard = props => {
   
   }
   
+  const sceenwidth = Dimensions.get('window').width;
+
   const Fav_styles = StyleSheet.create({
     fav: {
-      width: 345,
+      width: sceenwidth - 40,
       justifyContent: 'center',
-      marginRight:40,
-      marginLeft:40,
+      marginRight:20,
+      marginLeft:20,
       marginTop:10,
       paddingTop:10,
       paddingBottom:10,

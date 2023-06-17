@@ -4,7 +4,6 @@ import { useState, useRef } from 'react';
 import { Icon } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { AntDesign } from '@expo/vector-icons'; 
-import DropDownPicker from 'react-native-dropdown-picker';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { MaterialIcons } from '@expo/vector-icons'; 
 import {useData, useDataDispatch} from './DataContext.js'
@@ -15,67 +14,21 @@ const Reminder = props => {
   const [expanded, setExpanded] = useState(false);
   const [del, setdel] = useState(false);
 
+  const setSelected = () => {};
+
   const handleButtonPress = () => {
     setExpanded(!expanded);
   };
 
-  const handleDelPress = () => {
-    //del
-  };
+  const data = ['1','3','5','10','15','20','30',]
 
-  const [Mon, setMon] = useState(false);
-  const [Tue, setTue] = useState(false);
-  const [Wed, setWed] = useState(false);
-  const [Thr, setThr] = useState(false);
-  const [Fri, setFri] = useState(false);
-  const [Sat, setSat] = useState(false);
-  const [Sun, setSun] = useState(false);
-  const handleMonPress = () => {
-    setMon(!Mon);
-  };
-  const handleTuePress = () => {
-    setTue(!Tue);
-  };
-  const handleWedPress = () => {
-    setWed(!Wed);
-  };
-  const handleThrPress = () => {
-    setThr(!Thr);
-  };
-  const handleFriPress = () => {
-    setFri(!Fri);
-  };
-  const handleSatPress = () => {
-    setSat(!Sat);
-  };
-  const handleSunPress = () => {
-    setSun(!Sun);
-  };
-  const Mon_btn_color = Mon? '#0072B2' : '#858484';
-  const Tue_btn_color = Tue? '#0072B2' : '#858484';
-  const Wed_btn_color = Wed? '#0072B2' : '#858484';
-  const Thr_btn_color = Thr? '#0072B2' : '#858484';
-  const Fri_btn_color = Fri? '#0072B2' : '#858484';
-  const Sat_btn_color = Sat? '#0072B2' : '#858484';
-  const Sun_btn_color = Sun? '#0072B2' : '#858484';
+  const hour_data = [...Array(12).keys()].map(e=>''+e);
 
-  const [selected, setSelected] = useState(true);
-  
-  const data = [
-    {key:'1', value:'1'},
-    {key:'2', value:'3'},
-    {key:'3', value:'5'},
-    {key:'4', value:'10'},
-    {key:'5', value:'15'},
-    {key:'6', value:'20'},
-    {key:'7', value:'30'},
-  ]
-
-  const hour_data = [...Array(12).keys()];
-
-  const minute_data = [...Array(60).keys()];
+  const minute_data = [...Array(60).keys()].map(e=>''+e);
 
   const ampm_data = ['am', 'pm'];
+
+  const chineseDay = ['日','一','二','三','四','五','六']
 
   return (
     <TouchableOpacity
@@ -113,7 +66,8 @@ const Reminder = props => {
           <AntDesign style={Noti_styles.extend_icon} name="down" size={24} color="black" />
         </TouchableOpacity>
       )}
-      {expanded && (
+      
+      {expanded && (<>
         <View style={Noti_styles.time}>
           <Text style={Noti_styles.toptext6}>在公車抵達前 </Text>
           <SelectList 
@@ -122,29 +76,35 @@ const Reminder = props => {
             data={data} 
             save="value"
             search={false}
-            placeholder={"Time"}
+            placeholder={'Time'}
             maxHeight={150}
             dropdownShown={false}
-            defaultOption={{ key:'1', value:'1' }}
+            defaultOption={{key: '1', value: '1'}}
             boxStyles={{width:70}}
             dropdownStyles={{width:70}}
           />
           <Text style={Noti_styles.toptext6}> 分鐘提醒</Text>
         </View>
-      )}
-
-      {expanded && ( 
+      
         <View>
           <Text style={Noti_styles.rpt_alarm_text}>重複提醒：</Text>  
-          <View style={Noti_styles.rpt_alarm_week}>
-            <TouchableOpacity onPress={handleMonPress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Mon_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>一</Text></TouchableOpacity>
-            <TouchableOpacity onPress={handleTuePress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Tue_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>二</Text></TouchableOpacity>
-            <TouchableOpacity onPress={handleWedPress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Wed_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>三</Text></TouchableOpacity>
-            <TouchableOpacity onPress={handleThrPress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Thr_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>四</Text></TouchableOpacity>
-            <TouchableOpacity onPress={handleFriPress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Fri_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>五</Text></TouchableOpacity>
-            <TouchableOpacity onPress={handleSatPress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Sat_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>六</Text></TouchableOpacity>
-            <TouchableOpacity onPress={handleSunPress} style={[Noti_styles.rpt_alarm_btn, {backgroundColor:Sun_btn_color}]} ><Text style={Noti_styles.rpt_alarm_day}>日</Text></TouchableOpacity>
-          </View>
+          <View style={Noti_styles.rpt_alarm_week}>{
+            [...Array(7).keys()].map(day =>
+              <TouchableOpacity 
+                onPress={
+                  () => dispatch({
+                    type: 'toggleReminderRepeatDay',
+                    day
+                  })
+                } 
+                style={[
+                  Noti_styles.rpt_alarm_btn, 
+                  {backgroundColor: reminder[props.id].repeat[day] ? '#07B' : '#888'}
+                ]}>
+                  <Text style={Noti_styles.rpt_alarm_day}>{chineseDay[day]}</Text>
+                </TouchableOpacity>
+            )
+          }</View>
           <View style={Noti_styles.repeat_time_select}>
             <SelectList 
               style={Noti_styles.hour_select}
@@ -152,10 +112,10 @@ const Reminder = props => {
               data={hour_data} 
               save="value"
               search={false}
-              placeholder={"Time"}
+              placeholder={"00"}
               maxHeight={150}
               dropdownShown={false}
-              defaultOption={{ key:'00', value:'00' }}
+              defaultOption={{key: '00', value: '00'}}
               boxStyles={{width:65}}
               dropdownStyles={{width:65}}
             />
@@ -166,10 +126,10 @@ const Reminder = props => {
               data={minute_data} 
               save="value"
               search={false} 
-              placeholder={"Time"}
+              placeholder={"00"}
               maxHeight={150}
               dropdownShown={false}
-              defaultOption={{ key:'00', value:'00' }}
+              defaultOption={{key: '00', value: '00'}}
               boxStyles={{width:65}}
               dropdownStyles={{width:65}}
             />
@@ -180,26 +140,25 @@ const Reminder = props => {
               data={ampm_data} 
               save="value"
               search={false}
-              placeholder={"Time"}
+              placeholder={"am"}
               maxHeight={150}
               dropdownShown={false}
-              defaultOption={{ key:'am', value:'am' }}
-              boxStyles={{width:62,margin:0,}}
+              defaultOption={{key: 'am', value: 'am'}}
+              boxStyles={{width:65,margin:0,}}
               dropdownStyles={{width:65}}
             />
             <Text style={[Noti_styles.repeat_select_text, {color:"red"}]}>  提醒</Text>
           </View>
         </View>
-      )}
-
-      {expanded && (
+      
       <TouchableOpacity zIndex={0} onPress={handleButtonPress} >
         <AntDesign style={Noti_styles.extend_icon} name="up" size={24} color="black" />
       </TouchableOpacity>
-      )}
+      </>)}
     </TouchableOpacity>
   );
 };
+const sceenwidth = Dimensions.get('window').width;
 
 const Noti_styles = StyleSheet.create({
   toptext1:{
@@ -275,10 +234,10 @@ const Noti_styles = StyleSheet.create({
     position:'absolute'
   },
   noti:{
-    width: 345,
+    width: sceenwidth-40,
     justifyContent: 'center',
-    marginRight:40,
-    marginLeft:40,
+    marginRight:20,
+    marginLeft:20,
     marginTop:10,
     paddingTop:10,
     paddingBottom:10,

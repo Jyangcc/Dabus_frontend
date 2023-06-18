@@ -8,18 +8,22 @@ import {useData, useDataDispatch} from './DataContext.js'
 
 
 
-const RecentSearchCard = props => {
+const RecentSearchCard = ({name, navigation}) => {
   const {favorite} = useData();
   const dispatch = useDataDispatch();
+  // console.log(navigation)
+  // console.log(navigation.navigate)
 
-  const [isFav, setIsFav] = useState(favorite.includes(props.name));
+  const [isFav, setIsFav] = useState(favorite.includes(name));
 // navigation.navigate('BusDtail')
+
   return (
     <View>
       <View style={styles.container}>
-        <TouchableOpacity onPress={()=> {console.log("Go to ", props.name)}}>
-
-          <Text style = {styles.busstop}>{props.name}</Text>
+        
+        <TouchableOpacity onPress={()=> navigation.navigate('BusDtail') }>
+ 
+          <Text style = {styles.busstop}>{name}</Text>
 
         </TouchableOpacity>
         
@@ -27,7 +31,7 @@ const RecentSearchCard = props => {
           onPress={() => {
             dispatch({
               type: isFav ? 'removeFavorite' : 'addFavorite',
-              name : props.name
+              name : name
             });
             setIsFav(!isFav);
           }}

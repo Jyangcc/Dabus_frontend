@@ -5,13 +5,14 @@ import RecentSearchCard from './RecentSearchCard';
 import {useData} from './DataContext.js'
 
 
-const RecentSearchList = () => {
+const RecentSearchList = ({navigation}) => {
   const {recentlySearched} = useData();
+  // console.log(navigation)
 
     return (
         <SafeAreaView style={styles.container}>
             {/* <ScrollView style={styles.scrollContainer}> */}
-                {recentlySearched.map(rec => <RecentSearchCard name={rec}/>)}
+                {recentlySearched.map(rec => <RecentSearchCard name={rec} navigation = {navigation}/>)}
             {/* </ScrollView> */}
         </SafeAreaView>
     );

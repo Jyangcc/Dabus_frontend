@@ -12,6 +12,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 const FavoriteCard = props => {
     const {settings:{color}} = useData();
     const dispatch = useDataDispatch();
+    const handleSearchPress = () => {
+      // TODO
+    };
     const handleDelPress = () => {
       dispatch({
         type: 'removeFavorite',
@@ -24,44 +27,47 @@ const FavoriteCard = props => {
       card: {
         width: sceenwidth*0.9,
         margin: 8,
-        paddingTop: 30,
+        paddingTop: 25,
         paddingBottom: 30,
-        paddingLeft: 10,
+        paddingLeft: 15,
         paddingRight: 10,
         borderRadius: 10,
         borderWidth: 2,
         borderColor: color,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#F2F2F2'
+      },
+      to:{
+        fontSize:18,
+        color:"#000",
+        marginBottom: 5,
       },
       dest:{
-        fontSize:18,
-        color:"#000000",
-      },
-      text2:{
-        fontSize:22,
+        fontSize:30,
+        fontWeight: 600,
         color:color,
       },
       highLight:{
         fontSize:16,
         color:color,
+        fontWeight: 600,
       },
-      text4:{
+      plainText:{
         fontSize:16,
         color:"#000",
+        fontWeight: 400,
       },
     });
     
     return(
       <TouchableOpacity onPress={handleSearchPress} style={Fav_styles.card}>
           <View>
-            <Text style={Fav_styles.dest}>前往: <Text style={Fav_styles.text2}>{props.name}</Text></Text>
+            <Text style={Fav_styles.to}>前往 <Text style={Fav_styles.dest}>{props.name}</Text></Text>
             <Text style={Fav_styles.highLight}>{/*TODO*/'Bus1'}
-              <Text style={Fav_styles.text4}> 離抵達 </Text> 
+              <Text style={Fav_styles.plainText}> 離抵達 </Text> 
               <Text style={Fav_styles.highLight}>{/*TODO*/'Here'}</Text>
-              <Text style={Fav_styles.text4}> 還剩 </Text>
-              <Text style={Fav_styles.highLight}> {/*TODO*/'Minute'} </Text>
-              <Text style={Fav_styles.text4}> 分鐘</Text>
+              <Text style={Fav_styles.plainText}> 還剩{/*TODO*/'?'}分鐘</Text>
             </Text>
 
           </View>

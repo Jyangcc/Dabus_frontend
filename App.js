@@ -278,13 +278,14 @@ function Search({navigation}){
         </View>
 
         <ScrollView>
-          <SearchAnswer/>
+          <SearchAnswer navigation = {navigation}/>
+
           {/* dividing line */}
           <View style={{flexDirection: 'row', alignItems: 'center', marginRight: 20}}>
               <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
           </View>
           
-          <RecentSearchList/>
+          <RecentSearchList navigation = {navigation}/>
 
         </ScrollView>
         
@@ -347,9 +348,9 @@ function FavoriteScreen({navigation}){
       
       <FavoriteList style={{ zIndex:3}}/>
       
-      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.5}} source={require('./images/tree.png')} />
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.3}} source={require('./images/tree.png')} />
 
-      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.5}} source={require('./images/ground.png')} />
+      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.3}} source={require('./images/ground.png')} />
 
       <Text style = {[styles.treePercentscss,{opacity:0.5,zIndex:-1}]}> {treePercents} %</Text>
       

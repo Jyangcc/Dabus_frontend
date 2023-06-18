@@ -8,8 +8,6 @@ import {useData} from './DataContext.js'
 
 const FavoriteList = () => {
     const {favorite} = useData();
-    // console.log(favorite);
-    // console.log("here")
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollContainer}>

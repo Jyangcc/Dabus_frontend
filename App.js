@@ -137,8 +137,8 @@ function Root(){
           border:30 
         }
       }} 
-      // initialRouteName="Main"
-      initialRouteName="Favorite"
+      initialRouteName="Main"
+      // initialRouteName="Favorite"
 
       
       // tabBarActiveTintColor = "#559"

@@ -24,6 +24,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { Fontisto } from '@expo/vector-icons';
 
 import { useTheme } from 'react-native-paper';
+import MapView from 'react-native-maps';
 const screenWidth = Dimensions.get('window').width;
 
 // const Tab = createBottomTabNavigator();
@@ -275,9 +276,10 @@ function Search({navigation}){
 
 function BusDetail({navigation}) {
   return (
-    <View style={{ justifyContent: 'center' }}>
+    <View >
       
-      <BusDetailContainer/>
+       <BusDetailContainer  />
+
           
     </View>
 

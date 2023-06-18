@@ -213,10 +213,10 @@ const initialData = {
     'stop 4',
   ],
   recentlySearched: [
-    '陳正霖',
-    'ycc',
-    'cc',
-    'hiiiiiiiiiii'
+    'stop 1',
+    'stop 6',
+    'stop 8',
+    'stop 99'
   ],
   reminder: [
     {

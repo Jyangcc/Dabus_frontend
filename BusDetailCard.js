@@ -9,11 +9,9 @@ import Bus_tile from './Bus_tile.js';
 const BusDetailCard = () => {
 
     return (
-        <View>
-          <Text>bus card</Text>
+        <View >
           <Bus_card></Bus_card>
           <Bus_tile></Bus_tile>
-          <Text>bus card</Text>
         </View>
 
     );

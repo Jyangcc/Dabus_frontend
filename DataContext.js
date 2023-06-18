@@ -263,5 +263,7 @@ const initialData = {
     {color: '#07B', unlocked: true},
     {color: '#D83', unlocked: false},
     {color: '#56B', unlocked: false},
+    {color: '#39B', unlocked: false},
+    {color: '#969', unlocked: false},
   ],
 };

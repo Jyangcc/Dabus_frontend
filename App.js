@@ -26,6 +26,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 import MapView from 'react-native-maps';
 import SearchAnswer from './SearchAnswer.js';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -229,9 +230,10 @@ function Home({navigation}){
           onPress={() => navigation.navigate("Setting")}
         />}
       />    */}
-      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.8}} source={require('./images/tree.png')} />
 
-      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.8}} source={require('./images/ground.png')} />
+      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:1}} source={require('./images/ground.png')} />
+
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:1}} source={require('./images/tree.png')} />
 
       <View style={{zIndex:2, alignItems: 'center', justifyContent: 'center'}}>
         <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')}>
@@ -273,9 +275,9 @@ function Search({navigation}){
           <TextInputDestination busStops={busStops}/>
         </View>
 
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button title="Go to BusDtail" onPress={() => navigation.navigate('BusDtail')} />
-        </View>
+        </View> */}
 
         <ScrollView>
           <SearchAnswer navigation = {navigation}/>
@@ -329,9 +331,9 @@ function ReminderScreen({navigation}) {
 
       <ReminderList style={{ zIndex:2}}/>
 
-      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.5}} source={require('./images/tree.png')} />
 
       <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.5}} source={require('./images/ground.png')} />
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.5}} source={require('./images/tree.png')} />
 
       <Text style = {[styles.treePercentscss,{opacity:0.5,zIndex:-1}]}> {treePercents} %</Text>
       
@@ -348,9 +350,9 @@ function FavoriteScreen({navigation}){
       
       <FavoriteList style={{ zIndex:3}}/>
       
-      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.3}} source={require('./images/tree.png')} />
 
       <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.3}} source={require('./images/ground.png')} />
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.3}} source={require('./images/tree.png')} />
 
       <Text style = {[styles.treePercentscss,{opacity:0.5,zIndex:-1}]}> {treePercents} %</Text>
       

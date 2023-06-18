@@ -25,6 +25,7 @@ import { Fontisto } from '@expo/vector-icons';
 
 import { useTheme } from 'react-native-paper';
 import MapView from 'react-native-maps';
+import SearchAnswer from './SearchAnswer.js';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -135,7 +136,10 @@ function Root(){
           border:30 
         }
       }} 
-      initialRouteName="Main"
+      // initialRouteName="Main"
+      initialRouteName="Favorite"
+
+      
       // tabBarActiveTintColor = "#559"
       // tabBarInactiveTintColo = "#333"
       >
@@ -225,25 +229,29 @@ function Home({navigation}){
           onPress={() => navigation.navigate("Setting")}
         />}
       />    */}
-
       <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.8}} source={require('./images/tree.png')} />
 
       <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.8}} source={require('./images/ground.png')} />
 
-      <View style={{ zIndex:2, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')} >
-           <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
+      <View style={{zIndex:2, alignItems: 'center', justifyContent: 'center'}}>
+        <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')}>
+          <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
           <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF",marginLeft:10}}> 
             現在想去哪
           </Text>
         </TouchableOpacity>
 
-        <Text onPress={() =>dispatch({
-          type :'addTreePercents',
-          treePercents : 20
-      })}
-      style = {styles.treePercentscss}> {treePercents} %</Text>
-
+        <Text 
+          onPress={() => 
+            dispatch({
+              type :'addTreePercents',
+              treePercents : 20
+            })
+          }
+          style = {styles.treePercentscss}
+        > 
+          {treePercents} %
+        </Text>
 
       </View>
 
@@ -256,20 +264,30 @@ function Home({navigation}){
 }
 
 function Search({navigation}){
-  const busStops = {123: false, 345: false, 567: false};
+  const busStops = {'123': false, '345': false, '567': false};
   return(
     <View>
       <ScrollView style={{height: 300}} keyboardShouldPersistTaps = 'always'>
 
-        <View  style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <TextInputDestination busStops={busStops}/>
-
         </View>
 
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button title="Go to BusDtail" onPress={() => navigation.navigate('BusDtail')} />
         </View>
-        <RecentSearchList/>
+
+        <ScrollView>
+          <SearchAnswer/>
+          {/* dividing line */}
+          <View style={{flexDirection: 'row', alignItems: 'center', marginRight: 20}}>
+              <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+          </View>
+          
+          <RecentSearchList/>
+
+        </ScrollView>
+        
 
       </ScrollView>
     </View>

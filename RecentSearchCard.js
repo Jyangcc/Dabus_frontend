@@ -13,11 +13,15 @@ const RecentSearchCard = props => {
   const dispatch = useDataDispatch();
 
   const [isFav, setIsFav] = useState(favorite.includes(props.name));
-
+// navigation.navigate('BusDtail')
   return (
     <View>
       <View style={styles.container}>
-        <Text style = {styles.busstop}>{props.name}</Text>
+        <TouchableOpacity onPress={()=> {console.log("Go to ", props.name)}}>
+
+          <Text style = {styles.busstop}>{props.name}</Text>
+
+        </TouchableOpacity>
         
         <TouchableOpacity 
           onPress={() => {
@@ -43,10 +47,10 @@ const RecentSearchCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop:30,
-    marginBottom:20,
+    marginTop:10,
+    marginBottom:0,
     paddingBottom:20,
-    backgroundColor: "#DDD",
+    // backgroundColor: "#DDD",
     alignItems: "center",
     flexDirection: "row",
   },
@@ -56,10 +60,10 @@ const styles = StyleSheet.create({
   },
 
   busstop:{
-    marginLeft:20,
-    fontSize:20,
-    backgroundColor: '#DDD',
-    paddingTop:10,
+    marginLeft:30,
+    fontSize:25,
+    // backgroundColor: '#DDD',
+    paddingTop:0,
   }
 });
 

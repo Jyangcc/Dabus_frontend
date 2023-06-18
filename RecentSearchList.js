@@ -10,9 +10,9 @@ const RecentSearchList = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollContainer}>
+            {/* <ScrollView style={styles.scrollContainer}> */}
                 {recentlySearched.map(rec => <RecentSearchCard name={rec}/>)}
-            </ScrollView>
+            {/* </ScrollView> */}
         </SafeAreaView>
     );
   };

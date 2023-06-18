@@ -48,7 +48,7 @@ function dataReducer(data, action) {
       }};
     }
     case 'addTreePercents':{
-      if (data.treePercents + action.treePercents >= 100) {
+      if (data.treePercents + action.treePercents > 100) {
         const newColor = data.colors.find(c => c.unlocked === false);
         if (newColor) 
           return {
@@ -227,10 +227,10 @@ const initialData = {
       repeat: [
         {day: 0, on: false},
         {day: 1, on: false},
-        {day: 2, on: false},
+        {day: 2, on: true},
         {day: 3, on: false},
         {day: 4, on: false},
-        {day: 5, on: false},
+        {day: 5, on: true},
         {day: 6, on: false},
       ],
       hour: 18,

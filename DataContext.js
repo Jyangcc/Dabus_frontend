@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Firebase Initialization //
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, get, onValue } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAul7mwI4BoZVSw5BdDYyo7o5FOGJxMm2A",
@@ -18,99 +19,23 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app)
+const database = getDatabase(app);
+const auth = getAuth(app);
+var uid;
 
 const DataContext = createContext(null);
 
 const DataDispatchContext = createContext(null);
 
 export function DataProvider({ children }) {
-  const init = async () => {
-    try {
-      const data = JSON.parse(await AsyncStorage.getItem("data"));
-      return data;
-    } catch (error) {
-      console.log(error); 
-      return initialData; // yeah // can we push a version that contain our discussion and we can clear it lol
-      // i go get some water
-      // ok 
-    }
-  }
-  //如何思考async
-  // 我完全不知道常數可以async完丟到reducer裡 
-  //超協 什麼
-  // wait does async work like that
-  // don't we need to use something like await
-  // idk tho
-  // not sure if we need to get each of the item in data 
-  // or we can do it just like above 
-  // maybe don't need when getItem()
-  // but need await when setItem(), i just copy some of the code on the link i send in dc 
-  // what about uh
-  // wait is init a function that returns data or we need to use data in 
-  // here
-  // i think init is fuction
-  // then no one calls it
-  // 哇勒
-  // how about sleeping first
-  // what if a function is that returns a value but in it it await AsyncStorage.getItem("data") and if error it returns initialData
-  // it could work
-  // who call it, 
-  // like since it returns a vlaue we can just const data = that function;
-  // got it
-  // how to name it
-  // it's not initialData but it's a initial data => ok 
-  // ok just call it data what ever uh wait we can't
-  // yeah even it might not be local data just call it local data
-  const localData = init(); // what
-  // ok maybe
   const [data, dispatch] = useReducer(
     dataReducer,
-    localData 
+    initialData
   );
-  
-  async function fetchData(/*TODO*/) {
-    const dispatch = useDataDispatch();
-    dispatch({
-      type: 'setLoading', 
-      value: true
-    });
-
-    try {
-      const data = await getDataFromDB(/*TODO*/); // TODO
-      dispatch({
-        type: 'overWrite', 
-        data: data
-      }); 
-      dispatch({
-        type: 'setLoading', 
-        value: false
-      });
-    } catch (err) {
-      console.error('Error getting data from db', err);
-      if (true/*TODO: if there's data in asyncStorage*/) {
-        const data = null; // TODO: get data from asyncStorage
-
-        dispatch({
-          type: 'overWrite',
-          data: data
-        }) //ycc can u help me think
-        // so we all get data from local ?
-        // and then check the uid or sth to know whether 
-        // but how to do that before [data, dispatch] works 
-        // the [data, dispatch] at the very beginning of the DataProvider will set data to initil data
-        // but we need to check the loggedIn from the data in asyncStorage first to know wether we should fetch data from db
-        dispatch({
-          type: 'setLoading', 
-          value: false
-        });
-      }
-    }
-  }
 
   useEffect(() => {
-    fetchData(/*TODO*/);
-  }, []);
+    fetchData();
+  }, []); 
 
   return (
     <DataContext.Provider value={data}>
@@ -121,15 +46,117 @@ export function DataProvider({ children }) {
   );
 }
 
-function writeDataToDB(uuid, data) {
-  
+async function fetchData() {
+  const dispatch = useDataDispatch();
+  dispatch({
+    type: 'setLoading', 
+    value: true
+  });
+  const localData = (async () => {
+    try {
+      const data = JSON.parse(await AsyncStorage.getItem("data"));
+      dispatch({
+        type: 'overwrite', 
+        value: data
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      console.log('🤯');
+      await AsyncStorage.setItem("data", JSON.stringify(initialData)); 
+      return initialData; 
+    }
+  })(); // don't remove the ()
+  if (localData.loggedIn) {
+    const uuid = localData.uuid;
+    try {
+      const dbData = await getDataFromDB(uuid);
+      dispatch({
+        type: 'overwrite', 
+        data: dbData
+      }); 
+      dispatch({
+        type: 'setLoading', 
+        value: false
+      });
+    } 
+    catch (err) {
+      console.error('Error getting data from db', err);
+      dispatch({
+        type: 'setLoading', 
+        value: false
+      });
+    }
+  }
+} 
+
+function writeDataToDB(uid, data) {
+  const reference = ref(database, 'users/' + uid);
+  try{
+    set(reference, data);
+    console.log('Successfully write data to DB.');
+  }
+  catch (err) {
+    console.log('Failed to write data to DB.', err);
+  }
 }
 
-function getDataFromDB(uuid) {
-  const reference = ref(database, 'users/' + uuid);
-  onValue(reference, (snapshot) => {
-    return snapshot.val();
-  }) 
+async function getDataFromDB(uid) {
+  const reference = ref(database, 'users/' + uid);
+  try {
+    const snapshot = await new Promise((resolve, reject) => {
+      onValue(reference, (snapshot) => {
+        resolve(snapshot);
+      }, (error) => {
+        reject(error);
+      });
+    });
+
+    const data = snapshot.val();
+    console.log('Successfully read data from DB.');
+    return data;
+  } catch (error) {
+    console.log('Failed to read data from DB.', error);
+    throw error;
+  }
+}
+
+function SignIn(email, password) {
+  return new Promise ((resolve, reject) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((creadential) => {
+        console.log('Logged in successfully.');
+        resolve(creadential.user.uid);
+      })
+      .catch((err) => {
+        console.log('Failed to log in,', err);
+        reject('Failed to log in,', err);
+        
+      })
+  })
+}
+
+function SignOut() {
+  return new Promise((resolve, reject) => {
+    signOut(auth).then(() => {
+      resolve('Signed out successfully.')
+    }).catch((err) => {
+      reject('Failed to signed out.', err);
+    });
+  })
+}
+
+function createAccount(email, password) {
+  return new Promise ((resolve, reject) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((creadential) => {
+        console.log('Created successfully!');
+        resolve(creadential.user.uid);
+      })
+      .catch((err) => {
+        reject('Failed to create account', err);
+      })
+  })
 }
 
 export function useData() {
@@ -142,7 +169,7 @@ export function useDataDispatch() {
 
 function dataReducer(data, action) {
   switch (action.type) {
-    case 'overWrite': {
+    case 'overwrite': {
       return action.data;
     }
     case 'toggleTheme': {
@@ -313,13 +340,12 @@ function dataReducer(data, action) {
       }
     }
     case 'login':{
-      // 期待呼叫這個reducer的action裡面有uuid
-      const uuid = action.uuid
-      // 那我先串一下db的東東(fetch資料merge之類的)
-      const loggedIn = /*dbReturn*/true;
+      // 期待呼叫這個reducer的action裡面有uuid(只是用來更新下面的uuid)
+      // (無論他之前有沒有登入過，如果沒有的話，我們)
       return {
         ...data,
-        loggedIn: loggedIn,
+        uuid: action.uuid,
+        loggedIn: true,
       }
     }
     case 'setLoading': {

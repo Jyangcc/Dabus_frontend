@@ -26,6 +26,7 @@ import { Fontisto } from '@expo/vector-icons';
 import { useTheme } from 'react-native-paper';
 import MapView from 'react-native-maps';
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 // const Tab = createBottomTabNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -110,12 +111,14 @@ function Root(){
   const {settings: {color}} = useData();
   const theme = useTheme();
   theme.colors.secondaryContainer = "transperent";
+  const currentscreen = 0;
 
   return(
     <Tab.Navigator 
-      barStyle={{ backgroundColor: color }}
+      barStyle={{ backgroundColor: color  }}
       activeColor="#f0edf6"
       inactiveColor="#3e2465"
+
       // labeled = {true}
       shifting = {true}
       
@@ -175,7 +178,6 @@ function MainFlow({navigation}){
     </Stack.Navigator>
   )
 }
-const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   
@@ -275,11 +277,25 @@ function Search({navigation}){
 }
 
 function BusDetail({navigation}) {
+  const {settings:{color}} = useData();
+
   return (
     <View >
-      
-       <BusDetailContainer  />
+        <View style={{position: 'absolute',top:0,left:0,zIndex:2}}>
 
+          <TouchableOpacity  
+            style={{
+              backgroundColor: color, 
+              
+              width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')} >
+            <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
+            <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF",marginLeft:10}}> 
+              現在想去哪
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+       <BusDetailContainer  />
           
     </View>
 

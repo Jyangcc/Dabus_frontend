@@ -1,5 +1,5 @@
 import React, {useState, useEffect, createContext, useContext, useReducer} from 'react';
-import { View, Text, Button, Switch,ScrollView ,StyleSheet,TouchableOpacity,Dimensions} from 'react-native';
+import { View, Text, Button, Switch,ScrollView,Image ,StyleSheet,TouchableOpacity,Dimensions} from 'react-native';
 import { useData, useDataDispatch, DataProvider } from './DataContext.js'; 
 import Checkbox from './CheckBox.js';
 
@@ -29,7 +29,8 @@ const Fruit = () => {
             
             {(showFruit)&&
             <TouchableOpacity style={{position:"absolute",right:screenWidth/2,zIndex:10}} onPress={() => {setExpand(!expand);}}>
-                <MaterialCommunityIcons style={styles.fruit} name="fruit-cherries" size={40} color="red"/>
+                
+                <Image style={styles.fruit} source={require('./images/orangefruit.png')} />
             </TouchableOpacity>}
         </View>
         
@@ -40,12 +41,12 @@ const Fruit = () => {
 const styles = StyleSheet.create({
     fruit:{
       position:"absolute",
-      width:40,
-      height:40,
+      width:90,
+      height:90,
       top:300,
     },
     congrat:{
-        opacity: 0.9,
+        opacity: 0.7,
         position:"absolute",
         top:0,
     }

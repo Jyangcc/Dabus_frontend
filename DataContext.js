@@ -256,7 +256,7 @@ const initialData = {
       remind: 10
     },
   ],
-  treePercents: 30,
+  treePercents: 40,
   showFruit: false,
   newColor: null,
   colors: [

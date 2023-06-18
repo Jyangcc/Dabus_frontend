@@ -21,6 +21,7 @@ import { Feather } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Fontisto } from '@expo/vector-icons';
 
 import { useTheme } from 'react-native-paper';
 const screenWidth = Dimensions.get('window').width;
@@ -67,20 +68,31 @@ function ProviderRoot(){
   });
 
   const headerOptions_Setting = ({ route, navigation }) => ({
-    headerTintColor: "black",
-    headerTitleStyle: { alignSelf: "center", fontSize: 16 },
+    headerStyle: {
+      headerHeight: 104,
+      backgroundColor :color,
+    },
     headerTitleStyle: {
       fontSize: 0
     },
     headerRight: () => (
-      <Button 
-        title="Back " 
-        onPress={() => navigation.goBack()}
-        // onPress={() => console.log(navigation)}
-      />
+      <Ionicons onPress={() => navigation.goBack()} name="home-outline" size={30} color="white" />
+      
     ),
     headerLeft: () => (
-      <Text></Text>
+      <View style={{flex : 0}}> 
+        <TouchableOpacity style = {{
+          flex: 1,
+          alignItems: "center",
+          flexDirection: "row",
+          marginBottom:0,
+          marginLeft:10, 
+          width: 150}} onPress={() => navigation.navigate("Home")}>
+          <MaterialCommunityIcons name="bus" size={40} color="#FFF" />
+          <Text style = {{fontSize: 24,fontWeight: "bold",color: "#FFF"}}> Dabus</Text>
+        </TouchableOpacity>
+
+      </View>
     ), 
 
   }); 
@@ -211,23 +223,30 @@ function Home({navigation}){
         />}
       />    */}
 
-      <Image style={{zIndex:1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.8}} source={require('./images/tree.png')} />
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.8}} source={require('./images/tree.png')} />
 
-      <Image style={{zIndex:0, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.8}} source={require('./images/ground.png')} />
+      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.8}} source={require('./images/ground.png')} />
 
       <View style={{ zIndex:2, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6}} onPress={() => navigation.navigate('Search')} />
+        <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')} >
+           <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
+          <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF",marginLeft:10}}> 
+            現在想去哪
+          </Text>
+        </TouchableOpacity>
 
         <Text onPress={() =>dispatch({
           type :'addTreePercents',
-          treePercents :30
+          treePercents : 20
       })}
       style = {styles.treePercentscss}> {treePercents} %</Text>
 
 
       </View>
-      <Weather style={{zIndex:2,}} />
-      <Fruit style={{zIndex:0,}}  /> 
+
+      <Weather style={{zIndex:0,}} />
+
+      <Fruit style={{zIndex:3,}}  /> 
 
     </View>
   )
@@ -266,11 +285,18 @@ function BusDetail({navigation}) {
 }
 
 function ReminderScreen({navigation}) {
+  const {treePercents} = useData();
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Reminder Screen</Text>
 
-      <ReminderList/>
+      <ReminderList style={{ zIndex:2}}/>
+
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.5}} source={require('./images/tree.png')} />
+
+      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.5}} source={require('./images/ground.png')} />
+
+      <Text style = {[styles.treePercentscss,{opacity:0.5,zIndex:-1}]}> {treePercents} %</Text>
       
 
     </View>
@@ -278,11 +304,19 @@ function ReminderScreen({navigation}) {
 }
 
 function FavoriteScreen({navigation}){
+  const {treePercents} = useData();
+
   return(
     <View style={{ flex: 1, alignItems: 'center',  }}>
-      <Text>Favorite Screen</Text>
       
-      <FavoriteList/>
+      <FavoriteList style={{ zIndex:3}}/>
+      
+      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:0.5}} source={require('./images/tree.png')} />
+
+      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:0.5}} source={require('./images/ground.png')} />
+
+      <Text style = {[styles.treePercentscss,{opacity:0.5,zIndex:-1}]}> {treePercents} %</Text>
+      
     </View>
   );
 }

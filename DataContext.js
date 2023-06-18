@@ -121,7 +121,7 @@ export function DataProvider({ children }) {
   );
 }
 
-function write
+function writeDataToDB(uuid, d)
 
 function getDataFromDB(uuid) {
   const reference = ref(database, 'users/' + uuid);

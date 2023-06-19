@@ -96,9 +96,12 @@ const Setting_Page = () => {
           <View style = {{flexDirection:'row', alignItems:'center'}}>
           <Ionicons name="person-circle-outline" size={40} color="black" />
           
-            <TouchableOpacity onPress={()=>{dispatch({
+            <TouchableOpacity onPress={async ()=>{await dispatch({
                   type: 'login',
                   uuid: '9318'
+                })
+                dispatch({
+                  type: 'todb'
                 })
                 }}>
 
@@ -134,9 +137,12 @@ const Setting_Page = () => {
               // value={on}
               // onValueChange={handle}
               value={theme === 'dark'}
-              onValueChange={() => {
-                dispatch({
+              onValueChange={async () => {
+                await dispatch({
                   type: 'toggleTheme'
+                })
+                dispatch({
+                  type: 'todb'
                 })
               }}
             />
@@ -164,10 +170,13 @@ const Setting_Page = () => {
                     borderColor: '#444',
                   }}
 
-                  onSelect={selectedItem => {
-                    dispatch({ 
+                  onSelect={async selectedItem => {
+                    await dispatch({ 
                       type : 'setLanguage',
                       language : selectedItem === 'English' ? 'english' :'chinese'
+                    })
+                    dispatch({
+                      type: 'todb'
                     })
                     console.log("select language")
                     console.log(selectedItem)
@@ -204,11 +213,14 @@ const Setting_Page = () => {
                   c.unlocked &&
                   <TouchableOpacity
                     key={c.color}
-                      onPress={() =>
-                        dispatch({
+                      onPress={async () =>
+                        {await dispatch({
                           type : 'setColor',
                           color : c.color,
                         })
+                        dispatch({
+                          type: 'todb'
+                        })}
                       }
                       style={[styles.roundButton, {backgroundColor: c.color}]}>
                   </TouchableOpacity>

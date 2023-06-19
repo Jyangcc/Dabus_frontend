@@ -17,10 +17,13 @@ const FavoriteCard = props => {
     const handleSearchPress = () => {
       // TODO
     };
-    const handleDelPress = () => {
-      dispatch({
+    const handleDelPress = async () => {
+      await dispatch({
         type: 'removeFavorite',
         name : props.name
+      })
+      dispatch({
+        type: 'todb'
       })
     };
     const sceenwidth = Dimensions.get('window').width;

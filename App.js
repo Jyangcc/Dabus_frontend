@@ -218,20 +218,7 @@ function Home({navigation}){
 
   return(
     <View>
-      {/* <Header
-        ViewComponent={test}
-        backgroundColor={color}
-        leftComponent={<View style = {[styles.container,{marginLeft:10}]}>
-        <MaterialCommunityIcons name="bus" size={36} color="#FFF" />
-        <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF"}}> Dabus</Text>
-      </View>}
-        rightComponent={<Ionicons 
-          name="settings-sharp" 
-          size={24} 
-          color="#FFF"
-          onPress={() => navigation.navigate("Setting")}
-        />}
-      />    */}
+     
 
       <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:1}} source={require('./images/ground.png')} />
 
@@ -248,11 +235,17 @@ function Home({navigation}){
         </TouchableOpacity>
 
         <Text 
-          onPress={() => 
-            dispatch({
+          onPress={ async() => 
+            {await dispatch({
               type :'addTreePercents',
               treePercents : 20
             })
+            dispatch({
+              type: 'todb'
+            })
+            }
+            
+
           }
           style = {styles.treePercentscss}
         > 

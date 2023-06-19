@@ -3,9 +3,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 // Firebase Initialization //
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, get, onValue } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { initializeApp } from "@firebase/app";
+import { getDatabase, ref, set, get, onValue } from "@firebase/database";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "@firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAul7mwI4BoZVSw5BdDYyo7o5FOGJxMm2A",
@@ -26,7 +26,6 @@ var uid;
 const DataContext = createContext(null);
 
 const DataDispatchContext = createContext(null);
-
 export function DataProvider({ children }) {
   const [data, dispatch] = useReducer(
     dataReducer,
@@ -34,8 +33,59 @@ export function DataProvider({ children }) {
   );
 
   useEffect(() => {
+    // getDataFromDB('ycc_test_1')
     fetchData();
   }, []); 
+
+  const fetchData =  async () => {
+    // const dispatch = useDataDispatch();
+    console.log('🤯');
+    // dispatch({
+    //   type: 'setLoading', 
+    //   value: true
+    // });
+  
+    // const localData = (async () => {
+    //   try {
+    //     const data = JSON.parse(await AsyncStorage.getItem("data"));
+    //     dispatch({
+    //       type: 'overwrite', 
+    //       value: data
+    //     });
+    //     console.log('🤯');
+    //     return data;
+    //   } catch (error) {
+    //     console.log(error);
+    //     console.log('🤯');
+    //     await AsyncStorage.setItem("data", JSON.stringify(initialData)); 
+    //     return initialData; 
+    //   }
+    // })(); // don't remove the ()
+  
+    // if (localData.loggedIn) {
+      if(true){
+      const uuid = 'ycc_test_1'
+      try {
+        const dbData = await getDataFromDB(uuid);//
+        dispatch({
+          type: 'overwrite', 
+          data: dbData
+        }); 
+        // dispatch({
+        //   type: 'setLoading', 
+        //   value: false
+        // });
+      } 
+      catch (err) {
+        console.error('Error getting data from db', err);
+        dispatch({
+          type: 'setLoading', 
+          value: false
+        });
+      }
+    }
+  } 
+
 
   return (
     <DataContext.Provider value={data}>
@@ -46,52 +96,8 @@ export function DataProvider({ children }) {
   );
 }
 
-async function fetchData() {
-  const dispatch = useDataDispatch();
-  dispatch({
-    type: 'setLoading', 
-    value: true
-  });
-  const localData = (async () => {
-    try {
-      const data = JSON.parse(await AsyncStorage.getItem("data"));
-      dispatch({
-        type: 'overwrite', 
-        value: data
-      });
-      return data;
-    } catch (error) {
-      console.log(error);
-      console.log('🤯');
-      await AsyncStorage.setItem("data", JSON.stringify(initialData)); 
-      return initialData; 
-    }
-  })(); // don't remove the ()
-  if (localData.loggedIn) {
-    const uuid = localData.uuid;
-    try {
-      const dbData = await getDataFromDB(uuid);
-      dispatch({
-        type: 'overwrite', 
-        data: dbData
-      }); 
-      dispatch({
-        type: 'setLoading', 
-        value: false
-      });
-    } 
-    catch (err) {
-      console.error('Error getting data from db', err);
-      dispatch({
-        type: 'setLoading', 
-        value: false
-      });
-    }
-  }
-} 
-
 function writeDataToDB(uid, data) {
-  const reference = ref(database, 'users/' + uid);
+  const reference = ref(database, '/users/' + uid);
   try{
     set(reference, data);
     console.log('Successfully write data to DB.');
@@ -114,6 +120,7 @@ async function getDataFromDB(uid) {
 
     const data = snapshot.val();
     console.log('Successfully read data from DB.');
+    console.log(data);
     return data;
   } catch (error) {
     console.log('Failed to read data from DB.', error);
@@ -170,7 +177,13 @@ export function useDataDispatch() {
 }
 
 function dataReducer(data, action) {
+
   switch (action.type) {
+    case 'todb':{
+      writeDataToDB('ycc_test_1',data);
+      return data;
+    }
+    
     case 'overwrite': {
       return action.data;
     }
@@ -370,7 +383,7 @@ let nextid = 1;
 
 const initialData = {
   loggedIn: false,
-  uuid: null,
+  uuid: 'ycc_test_1',
   loading: true,
   settings: {theme: 'light', language: 'english', color: '#07B'},
   favorite: [

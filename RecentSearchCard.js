@@ -26,12 +26,15 @@ const RecentSearchCard = ({name, navigation}) => {
         </TouchableOpacity>
         
         <TouchableOpacity 
-          onPress={() => {
-            dispatch({
+          onPress={async() => {
+            await dispatch({
               type: isFav ? 'removeFavorite' : 'addFavorite',
               name : name
             });
             setIsFav(!isFav);
+            dispatch({
+              type: 'todb'
+            })
           }}
           style = {styles.roundButton}>
           {

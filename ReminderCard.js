@@ -249,10 +249,14 @@ const Reminder = props => {
         </View>
         
         <TouchableOpacity 
-          onPress={() => dispatch({
+          onPress={async() => { await dispatch({
             type: 'removeReminder',
             id: props.id
-          })} 
+          })
+          dispatch({
+            type: 'todb'
+          })}
+        } 
           style={Noti_styles.del} 
         >
           <MaterialIcons style={Noti_styles.del_icon} name="alarm-off" size={45} color="black" />
@@ -282,10 +286,15 @@ const Reminder = props => {
           </Text>
           <SelectList 
             style={Noti_styles.time_select}
-            setSelected={val => dispatch({
+            setSelected={async val => {
+              await dispatch({
               type: 'setReminderBeforeTime',
               remind: val
-            })} 
+            })
+            dispatch({
+              type: 'todb'
+            })
+          }} 
             data={data} 
             save="value"
             search={false}
@@ -312,13 +321,15 @@ const Reminder = props => {
           <View style={Noti_styles.rpt_alarm_week}>{
             [...Array(7).keys()].map(day =>
               <TouchableOpacity 
-                onPress={
-                  () => {
-                    dispatch({
+                onPress={ async () => {
+                    await dispatch({
                       type: 'toggleReminderRepeatDay',
                       id: props.id,
                       day: day
                     });
+                    dispatch({
+                      type: 'todb'
+                    })
                   }
                 } 
                 style={[
@@ -336,11 +347,14 @@ const Reminder = props => {
           <View style={Noti_styles.repeat_time_select}>
             <SelectList 
               style={Noti_styles.hour_select}
-              setSelected={val => dispatch({
+              setSelected={async val => { await dispatch({
                 type: 'setReminderHour',
                 id: props.id,
                 hour: val
-              })}
+              })
+              dispatch({
+                type: 'todb'
+              })}}
 
               data={hour_data} 
               save="value"
@@ -355,11 +369,14 @@ const Reminder = props => {
             <Text style={Noti_styles.repeat_select_text}> : </Text>
             <SelectList 
               style={Noti_styles.minute_select}
-              setSelected={val => dispatch({
+              setSelected={async val =>{await dispatch({
                 type: 'setReminderMinute',
                 id: props.id,
                 minute: val
-              })} 
+              })
+              dispatch({
+                type: 'todb'
+              })}} 
               data={minute_data} 
               save="value"
               search={false} 
@@ -373,13 +390,16 @@ const Reminder = props => {
             <Text style={Noti_styles.repeat_select_text}></Text>
             <SelectList 
               style={Noti_styles.ampm_select}
-              setSelected={val => {
-                dispatch({
+              setSelected={async val => {
+                await dispatch({
                   type: 'setReminderHour',
                   id: props.id,
                   hour: val === 'am' 
                     ? props.hour % 12 
                     : props.hour % 12 + 12
+                })
+                dispatch({
+                  type: 'todb'
                 })
               }}
               data={ampm_data} 

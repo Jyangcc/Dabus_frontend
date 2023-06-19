@@ -24,7 +24,11 @@ const Fruit = () => {
     return(
         <View style={{top:0,position:"absolute",width:screenWidth,height:screenHeight}}>
             {(expand)&&
-            <TouchableOpacity style={[styles.congrat,{backgroundColor:newColor,width:screenWidth,height:screenHeight,zIndex:1}]}  onPress={() => {setExpand(!expand),dispatch({type: 'hideFruit'}), console.log(newColor)}}>
+            <TouchableOpacity style={[styles.congrat,{backgroundColor:newColor,width:screenWidth,height:screenHeight,zIndex:1}]}  onPress={async() => {setExpand(!expand),await dispatch({type: 'hideFruit'}),
+            dispatch({
+                type: 'todb'
+              })
+             console.log(newColor)}}>
             </TouchableOpacity>}
             
             {(showFruit)&&

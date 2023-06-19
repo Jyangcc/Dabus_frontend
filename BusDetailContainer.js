@@ -5,6 +5,8 @@ import {SafeAreaView,Dimensions, StyleSheet,TouchableOpacity, TextInput, View, T
 
 import BusDetailCard from './BusDetailCard';
 import MapView from 'react-native-maps';
+import {useData, useDataDispatch} from './DataContext.js'
+
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -19,15 +21,14 @@ const BusDetailContainer = () => {
           <BusDetailCard title={'PAGE 2'} index={1} />
         </Animated.ScrollView> */}
         <MapView  initialRegion={{
-          latitude: 24.797119,
+          latitude: 24.780119,
           longitude: 120.994375,
           latitudeDelta: 0.0461,
           longitudeDelta: 0.0210,
         }} 
       style={{position :"absolute",height: 1000,width: screenWidth}}/>
         
-        <View style = {{ zIndex:1,position : "absolute",top:screenHeight*0.6,}}>
-
+        <View style = {{ zIndex:1,marginTop:530}}>
           <BusDetailCard/>
         </View>
 

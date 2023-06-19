@@ -35,6 +35,7 @@ export function DataProvider({ children }) {
   useEffect(() => {
     // getDataFromDB('ycc_test_1')
     fetchData();
+    // console.log(data)
   }, []); 
 
   const fetchData =  async () => {
@@ -373,6 +374,20 @@ function dataReducer(data, action) {
         loading: action.loading
       }
     }
+    case 'setRouteData': {
+      return {
+        ...data,
+        present_location: action.present_location,
+        destination_location: action.destination_location,
+        p_lon: action.p_lon,   // 現在位置經度
+        p_lat: action.p_lat,   // 現在位置緯度
+        d_lon: action.d_lon,   // 目的地位置經度
+        d_lat: action.p_lat,   // 目的地位置緯度
+        buses_routes: action.buses_routes, // 可能的公車路線
+        busdata : action.busdata
+      }
+    }
+    
     default: {
       throw Error('Unknown action: ' + action.type);
     }
@@ -444,4 +459,41 @@ const initialData = {
     {color: '#39B', unlocked: false},
     {color: '#969', unlocked: false},
   ],
+  present_location: '清華大學', // 現在位置
+  destination_location: null, // 目的地位置
+  p_lon: 120.994375,   // 現在位置經度
+  p_lat: 24.797119,   // 現在位置緯度
+  d_lon: 120.994375,   // 目的地位置經度
+  d_lat: 24.797119,   // 目的地位置緯度
+  buses_routes: [], // 可能的公車路線
+  busdata : [
+    {
+      busType: '11',
+      score: 2753.5304461060095
+    },
+    {
+      busName: "2",
+      departureStop: "火車站",
+      destinationStop: "交大光復校區",
+      currentStop: [
+      ],
+      arriveTime: 40,
+      FromStopLat: 24.803307,
+      FromStopLon: 120.971927,
+      Stops: [
+        {
+          name: "火車站",
+          arriveTime: 2400
+        },
+        {
+          name: "東門市場",
+          arriveTime: 2460
+        }
+      ],
+      BusType: 0,
+      Direction: 0,
+      score: 5067.4403770957515
+    }
+    ],
+
 };

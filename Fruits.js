@@ -14,6 +14,11 @@ const Fruit = () => {
     const dispatch = useDataDispatch();
     const [expand, setExpand] = useState(false);
 
+  const {settings: {theme, language, color}, colors} = useData();
+  const mode_color = (theme === 'dark') ? '#fff' : '#252525';
+  const mode_bg_color = (theme === 'dark') ? '#252525' : '#f2f2f2';
+
+
     // onPress = {() => dispatch({type: 'hideFruit'}})
 
     const handleExpandPress = () => {
@@ -24,7 +29,7 @@ const Fruit = () => {
     return(
         <View style={{top:0,position:"absolute",width:screenWidth,height:screenHeight}}>
             {(expand)&&
-            <TouchableOpacity style={[styles.congrat,{backgroundColor:newColor,width:screenWidth,height:screenHeight,zIndex:1}]}  onPress={async() => {setExpand(!expand),await dispatch({type: 'hideFruit'}),
+            <TouchableOpacity style={[styles.congrat,{backgroundColor:newColor,width:screenWidth,height:screenHeight,zIndex:1,}]}  onPress={async() => {setExpand(!expand),await dispatch({type: 'hideFruit'}),
             dispatch({
                 type: 'todb'
               })
@@ -32,7 +37,7 @@ const Fruit = () => {
             </TouchableOpacity>}
             
             {(showFruit)&&
-            <TouchableOpacity style={{position:"absolute",right:screenWidth/2,zIndex:10}} onPress={() => {setExpand(!expand);}}>
+            <TouchableOpacity style={{position:"absolute",right:screenWidth/2,zIndex:10,}} onPress={() => {setExpand(!expand);}}>
                 
                 <Image style={styles.fruit} source={require('./images/orangefruit.png')} />
             </TouchableOpacity>}

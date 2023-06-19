@@ -210,6 +210,9 @@ const styles = StyleSheet.create({
 function Home({navigation}){
   // const {settings:{color}} = useData();
   const {settings: {theme, language, color}, colors} = useData();
+  const mode_color = (theme === 'dark') ? '#fff' : '#252525';
+  const mode_bg_color = (theme === 'dark') ? '#252525' : '#f2f2f2';
+
 
   const {treePercents} = useData();
   const dispatch = useDataDispatch();
@@ -217,55 +220,61 @@ function Home({navigation}){
   const screenHeight = Dimensions.get('window').height;
 
   return(
-    <View>
+    <View >
      
+      <View style={{backgroundColor:mode_bg_color,top:0,position:"absolute",width:screenWidth,height:screenHeight}}>
 
-      <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:1}} source={require('./images/ground.png')} />
+        <Image style={{zIndex:-1, width:screenWidth, position : "absolute",top:screenHeight*0.295, opacity:1, backgroundColor:mode_bg_color}} source={require('./images/ground.png')} />
 
-      <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:1}} source={require('./images/tree.png')} />
+        <Image style={{zIndex:-1,position : "absolute",width:300,height:300,top:screenHeight*0.3,left:50, opacity:1,}} source={require('./images/tree.png')} />
 
-      <View style={{zIndex:2, alignItems: 'center', justifyContent: 'center'}}>
-        <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')}>
-          <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
-          <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF",marginLeft:10}}> 
-          {
-            language === 'english'? 'Go to ...': '現在想去哪' 
-          }
-          </Text>
-        </TouchableOpacity>
-
-        <Text 
-          onPress={ async() => 
-            {await dispatch({
-              type :'addTreePercents',
-              treePercents : 20
-            })
-            dispatch({
-              type: 'todb'
-            })
-            }
+        <View style={{zIndex:2, alignItems: 'center', justifyContent: 'center'}}>
+          <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')}>
             
+            <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
+            <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF",marginLeft:10}}> 
+            {
+              language === 'english'? 'Go to ...': '現在想去哪' 
+            }
+            </Text>
+          </TouchableOpacity>
 
-          }
-          style = {styles.treePercentscss}
-        > 
-          {treePercents} %
-        </Text>
+          <Text 
+            onPress={ async() => 
+              {await dispatch({
+                type :'addTreePercents',
+                treePercents : 20
+              })
+              dispatch({
+                type: 'todb'
+              })
+              }
+            }
+            style = {styles.treePercentscss}
+          > 
+            {treePercents} %
+          </Text>
 
+        </View>
+
+        <Weather style={{zIndex:0,backgroundColor:mode_bg_color}} />
+
+        <Fruit style={{zIndex:3,backgroundColor:mode_bg_color}}  /> 
       </View>
-
-      <Weather style={{zIndex:0,}} />
-
-      <Fruit style={{zIndex:3,}}  /> 
 
     </View>
   )
 }
 
+
 function Search({navigation}){
 
+  const {settings: {theme, language, color}, colors} = useData();
+  const mode_color = (theme === 'dark') ? '#fff' : '#252525';
+  const mode_bg_color = (theme === 'dark') ? '#252525' : '#f2f2f2';
+
   return(
-    <View>
+    <View style={{top:0,position:"absolute",width:screenWidth,height:screenHeight,backgroundColor:mode_bg_color }}>
       <ScrollView style={{height: 300}} keyboardShouldPersistTaps = 'always'>
 
         <View >
@@ -280,8 +289,8 @@ function Search({navigation}){
           {/* <SearchAnswer navigation = {navigation}/> */}
 
           {/* dividing line */}
-          <View style={{flexDirection: 'row', alignItems: 'center', marginRight: 20}}>
-              <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
+          <View style={{flexDirection: 'row', alignItems: 'center', marginRight: 20,}}>
+              <View style={{flex: 1, height: 1, backgroundColor: mode_color,}} />
           </View>
           
           <RecentSearchList navigation = {navigation}/>
@@ -323,8 +332,12 @@ function BusDetail({navigation}) {
 function ReminderScreen({navigation}) {
   const {treePercents} = useData();
 
+  const {settings: {theme, language, color}, colors} = useData();
+  const mode_color = (theme === 'dark') ? '#fff' : '#252525';
+  const mode_bg_color = (theme === 'dark') ? '#252525' : '#f2f2f2';
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:mode_bg_color }}>
 
       <ReminderList style={{ zIndex:2}}/>
 
@@ -342,8 +355,13 @@ function ReminderScreen({navigation}) {
 function FavoriteScreen({navigation}){
   const {treePercents} = useData();
 
+  const {settings: {theme, language, color}, colors} = useData();
+  const mode_color = (theme === 'dark') ? '#fff' : '#252525';
+  const mode_bg_color = (theme === 'dark') ? '#252525' : '#f2f2f2';
+
+
   return(
-    <View style={{ flex: 1, alignItems: 'center',  }}>
+    <View style={{ flex: 1, alignItems: 'center',backgroundColor:mode_bg_color  }}>
       
       <FavoriteList style={{ zIndex:3}}/>
       

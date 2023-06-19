@@ -11,9 +11,12 @@ import { useData } from './DataContext.js';
 const Bus_tile = (props) => {
     const [remind, setremind] = useState(false);
     const {settings: {theme, language, color}, colors} = useData();
+    const {present_location, destination_location ,p_lon ,p_lat,d_lon,d_lat,buses_routes,busdata} = useData();
+    
     const handleSetRemindPress = () => {
       setremind(!remind);
     };
+    console.log(busdata,'data')
     return(
       <TouchableOpacity onPress={handleSetRemindPress} style={Bus_tile_styles.container}>
         <MaterialCommunityIcons style={Bus_tile_styles.bus_icon} name="bus-stop" size={60} color={color} />
@@ -21,14 +24,17 @@ const Bus_tile = (props) => {
         <View style={Bus_tile_styles.bus_and_del}>
           
           <View style={Bus_tile_styles.bus}>
-            <Text style={Bus_tile_styles.text2}>{props.bus_name}
+            <Text style={Bus_tile_styles.text2 }>
+              {present_location}{/*Todo*/}
               <Text style={Bus_tile_styles.text1}>
-              {
-                language === 'english'? ' To ': '往' 
-              }
-               <Text style={Bus_tile_styles.text2}>
-                {props.dest}
-                </Text></Text>
+                {
+                  language === 'english'? ' To ': '往' 
+                }
+                <Text style={Bus_tile_styles.text2}>
+                {destination_location}{/*Todo*/}
+                </Text>
+
+              </Text>
             </Text> 
             <Text>
               <Text style={Bus_tile_styles.text4}>{
@@ -36,14 +42,16 @@ const Bus_tile = (props) => {
               }
                 </Text> 
               <Text style={Bus_tile_styles.text3}>
-                {props.arrive_time} 
+                {busdata} {/*Todo*/}
                 </Text>
               <Text style={Bus_tile_styles.text4}>
               {
-                language === 'english'? '': '分鐘後抵達' 
+                language === 'english'? ' mins': '分鐘後抵達' 
               }
                </Text>
-              <Text style={Bus_tile_styles.text5}>{props.depart_stop} </Text>            
+              <Text style={Bus_tile_styles.text5}>
+                {props.depart_stop} {/*Todo*/}
+                </Text>            
             </Text>
           </View>
           
@@ -97,7 +105,7 @@ const Bus_tile = (props) => {
       marginLeft:0,
       marginRight:10,
       marginBottom:10,
-      fontSize:22,
+      fontSize:16,
       color:"#0072B2",
     },
     text3:{
@@ -105,7 +113,7 @@ const Bus_tile = (props) => {
       marginRight:0,
       marginTop:5,
       marginBottom:0,
-      fontSize:16,
+      fontSize:10,
       color:"#0072B2",
     },
     text4:{

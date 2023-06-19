@@ -11,10 +11,8 @@ import {useData, useDataDispatch} from './DataContext.js'
 const RecentSearchCard = ({name, navigation}) => {
   const {favorite} = useData();
   const dispatch = useDataDispatch();
-  // console.log(navigation)
-  // console.log(navigation.navigate)
-
   const [isFav, setIsFav] = useState(favorite.includes(name));
+  
 // navigation.navigate('BusDtail')
 
   return (

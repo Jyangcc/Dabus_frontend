@@ -124,9 +124,10 @@ async function getDataFromDB(uid) {
 function SignIn(email, password) {
   return new Promise ((resolve, reject) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((creadential) => {
+      .then((credential) => {
         console.log('Logged in successfully.');
-        resolve(creadential.user.uid);
+        uid = credential.user.uid;
+        resolve(credential.user.uid);
       })
       .catch((err) => {
         console.log('Failed to log in,', err);
@@ -149,9 +150,10 @@ function SignOut() {
 function createAccount(email, password) {
   return new Promise ((resolve, reject) => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((creadential) => {
+      .then((credential) => {
         console.log('Created successfully!');
-        resolve(creadential.user.uid);
+        uid = credential.user.uid;
+        resolve(credential.user.uid);
       })
       .catch((err) => {
         reject('Failed to create account', err);
@@ -342,6 +344,8 @@ function dataReducer(data, action) {
     case 'login':{
       // 期待呼叫這個reducer的action裡面有uuid(只是用來更新下面的uuid)
       // (無論他之前有沒有登入過，如果沒有的話，我們)
+
+      console.log("press log in")
       return {
         ...data,
         uuid: action.uuid,
@@ -368,23 +372,21 @@ const initialData = {
   loading: true,
   settings: {theme: 'light', language: 'english', color: '#07B'},
   favorite: [
-    'stop 1',
-    'stop 2',
-    'stop 3',
-    'stop 4',
+    '新竹火車站',
+    '馬偕醫院',
+    '123'
   ],
   recentlySearched: [
-    'stop 1',
-    'stop 6',
-    'stop 8',
-    'stop 99'
+    '東門市場',
+    '新竹高鐵站',
+    '新竹火車站'
   ],
   reminder: [
     {
       id : 0,
       bus: 'Bus1',
-      from: 'Here',
-      to: 'There',
+      from: '清華大學',
+      to: '新竹火車站',
       repeat: [
         {day: 0, on: false},
         {day: 1, on: false},
@@ -401,8 +403,8 @@ const initialData = {
     {
       id : 1,
       bus: 'Bus3',
-      from: 'Here',
-      to: 'There',
+      from: '清華大學',
+      to: '新竹高鐵站',
       repeat: [
         {day: 0, on: false},
         {day: 1, on: false},

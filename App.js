@@ -266,21 +266,21 @@ function Home({navigation}){
 }
 
 function Search({navigation}){
-  const busStops = {'123': false, '345': false, '567': false};
+
   return(
     <View>
       <ScrollView style={{height: 300}} keyboardShouldPersistTaps = 'always'>
 
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <TextInputDestination busStops={busStops}/>
+        <View >
+          <TextInputDestination navigation = {navigation}/>
         </View>
 
         {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button title="Go to BusDtail" onPress={() => navigation.navigate('BusDtail')} />
         </View> */}
 
-        <ScrollView>
-          <SearchAnswer navigation = {navigation}/>
+        {/* <ScrollView> */}
+          {/* <SearchAnswer navigation = {navigation}/> */}
 
           {/* dividing line */}
           <View style={{flexDirection: 'row', alignItems: 'center', marginRight: 20}}>
@@ -289,7 +289,7 @@ function Search({navigation}){
           
           <RecentSearchList navigation = {navigation}/>
 
-        </ScrollView>
+        {/* </ScrollView> */}
         
 
       </ScrollView>

@@ -1,15 +1,30 @@
 import React, {useState} from 'react';
-import {SafeAreaView,ScrollView, StyleSheet, TextInput,View} from 'react-native';
+import { createContext, useEffect, useContext, useReducer } from 'react';
+import {SafeAreaView,ScrollView, StyleSheet, TextInput,TouchableOpacity,Text, View} from 'react-native';
 import {useData, useDataDispatch} from './DataContext.js'
+import SearchAnswer from './SearchAnswer.js';
 
-const TextInputDestination = (props) => {
+const TextInputDestination = ({navigation}) => {
   const {settings: {color}} = useData();
+  const busStops = {'123': false, '345': false, '567': false};
+
 
   const [text, setText] = useState('');
+
   const findDestination = () => {
-    if (props.busStops.find(text))
-      props.addRecentSearch(text);
+    for(let i = 0; i < busStops.length; i++) {
+      if(busStops[i] === {text}){
+        console.log(busStops[i]);
+      }
+      console.log("ppp");
+    }
+    // if (busStops.find(text))
+    //   console.log("ll")
+      // addRecentSearch(text);
   }
+  useEffect(() => {
+    console.log("Search page")
+  });
   
   const styles = StyleSheet.create({
     input: {
@@ -36,8 +51,17 @@ const TextInputDestination = (props) => {
           autoFocus={true}
           blurOnSubmit={false}
           value={text}
-          onSubmitEditing={findDestination}
+          // onSubmitEditing={findDestination}
         />
+          {1 ? <SearchAnswer navigation = {navigation} name = {text}/>: <Text style={{
+            fontSize:25,
+            marginLeft:30,
+            paddingBottom:10,
+            // backgroundColor: "#DDD",
+            alignItems: "center",
+            flexDirection: "row",
+          }}>Can not find</Text>}
+        {/* <SearchAnswer navigation = {navigation} name = {text}/> */}
 
       {/* </ScrollView> */}
 

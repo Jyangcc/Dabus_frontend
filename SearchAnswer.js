@@ -16,12 +16,12 @@ import RecentSearchCard from './RecentSearchCard';
 
 import {useData} from './DataContext.js'
 
-const SearchAnswer = ({navigation}) => {
+const SearchAnswer = ({navigation,name}) => {
     const {reminder} = useData();
     return (
-        <SafeAreaView style={styles.container}>
-             <RecentSearchCard name='新竹火車站' navigation = {navigation}/>
-        </SafeAreaView>
+        // <SafeAreaView style={styles.container}>
+             <RecentSearchCard name= {name} navigation = {navigation}/>
+        // </SafeAreaView>
     );
   };
   

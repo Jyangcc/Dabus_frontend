@@ -97,7 +97,8 @@ const Setting_Page = () => {
           <Ionicons name="person-circle-outline" size={40} color="black" />
           
             <TouchableOpacity onPress={()=>{dispatch({
-                  type: 'Login'
+                  type: 'login',
+                  uuid: '9318'
                 })
                 }}>
 

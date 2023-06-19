@@ -103,7 +103,9 @@ const Setting_Page = () => {
                 }}>
 
               <Text style={{lineHeight: 30, fontSize: 30, marginLeft: 10}}>
-                登入帳號
+                {
+                  language === 'english'? 'Log in': '登入帳號' 
+                }
                 </Text>
 
             </TouchableOpacity>
@@ -118,7 +120,11 @@ const Setting_Page = () => {
 
           <View style={[styles.container_darkmode,{marginTop:30}]} >
             <Ionicons name="moon" size={30} color="black" />
-            <Text style={{ fontSize: 30, marginLeft:10}}>暗色主題</Text>
+            <Text style={{ fontSize: 30, marginLeft:10}}>
+              {
+                language === 'english'? 'Darkmode': '暗色主題' 
+              }
+            </Text>
             
             <Switch
               style = {{top:0,left:screenWidth*0.7, position:'absolute'}}
@@ -138,9 +144,13 @@ const Setting_Page = () => {
             
           </View>
 
-          <View style={[styles['container_' + theme],{marginTop:30,alignItems: "center", flexDirection: "row",}]}>
+          <View style={[styles['container_'],{marginTop:30,alignItems: "center", flexDirection: "row",}]}>
             <Entypo name="globe" size={30} color="black" />
-            <Text style={{ fontSize: 30,marginLeft:10}}>語言</Text>
+            <Text style={{ fontSize: 30,marginLeft:10}}>
+              {
+                language === 'english'? 'Lanuage': '語言' 
+              }
+            </Text>
             <View style = {{top:0,left:screenWidth*0.5, position:'absolute'}}>
               <SelectDropdown 
                   // Todo 
@@ -182,7 +192,10 @@ const Setting_Page = () => {
           <View style={[styles.container_col,{marginTop:30}]}>
             <View style = {{alignItems: "center",flexDirection: "row"}}>
               <Ionicons name="color-fill" size={30} color="black" />
-              <Text style={{ fontSize: 30,marginLeft:10 }}>主題色</Text>
+              <Text style={{ fontSize: 30,marginLeft:10 }}>{
+                language === 'english'? 'Theme coloe': '主題色' 
+              }
+              </Text>
             </View>
 
             <View style={{alignItems: "center",flexDirection: "row", marginTop:10}}>
@@ -207,13 +220,20 @@ const Setting_Page = () => {
 
           <View style={{marginTop:30,alignItems: "center", flexDirection: "row",}}>
             <Ionicons name="arrow-redo" size={30} color="black" />
-            <Text style={{fontSize: 30,marginLeft:10}}>分享給好友</Text>
+            <Text style={{fontSize: 30,marginLeft:10}}>{
+                language === 'english'? 'Share': '分享給好友' 
+              }
+              </Text>
 
           </View>
 
           <View style={{marginTop:30,alignItems: "center", flexDirection: "row",}}>
             <FontAwesome name="thumbs-up" size={30} color="black" />
-            <Text style={{fontSize: 30,marginLeft:10}}>幫我們評分</Text>
+            <Text style={{fontSize: 30,marginLeft:10}}>
+              {
+                language === 'english'? 'Rate this App': '幫我們評分' 
+              }
+              </Text>
 
           </View>
       </View>

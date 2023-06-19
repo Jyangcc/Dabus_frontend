@@ -9,7 +9,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import {useData, useDataDispatch} from './DataContext.js'
 
 const Reminder = props => {
-  const {settings:{color}} = useData();
+  // const {settings:{color}} = useData();
+  const {settings: {theme, language, color}, colors} = useData();
+  const{reminder} = useData();
+
   const dispatch = useDataDispatch();
 
   const [expanded, setExpanded] = useState(false);
@@ -27,6 +30,7 @@ const Reminder = props => {
   const ampm_data = ['am', 'pm'];
 
   const chineseDay = ['日','一','二','三','四','五','六']
+  const englishDay = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 
   const sceenwidth = Dimensions.get('window').width;
 
@@ -40,11 +44,11 @@ const Reminder = props => {
       color:"#858484",
     },
     toptext2:{
-      marginLeft:0,
+      marginLeft:10,
       marginRight:80,
       marginBottom:0,
       fontSize:22,
-      color:"#0072B2",
+      color: color,
     },
     toptext3:{
       marginLeft:15,
@@ -154,7 +158,7 @@ const Reminder = props => {
       paddingBottom:10,
     },
     rpt_alarm_day:{
-      fontSize:22,
+      fontSize:18,
       color:"white",
     },
     repeat_time_select:{
@@ -217,15 +221,31 @@ const Reminder = props => {
       style={[Noti_styles.noti,{opacity:0.8}]}
       underlayColor='#fff'
     >
-      <Text style={Noti_styles.toptext1}>前往: {props.to}</Text>
+      <Text style={Noti_styles.toptext1}> 
+      {
+        language === 'english'? 'Go to :': '前往：' 
+      }
+      {props.to}</Text>
       <View style={Noti_styles.bus_and_del}>
         <View>
-          <Text style={Noti_styles.toptext2}>{props.bus}
-            <Text style={Noti_styles.toptext4}> 離抵達 </Text> 
-          {props.from}</Text>
-          <Text style={Noti_styles.toptext3}>還剩 
+          <Text style={Noti_styles.toptext2}>
+            {props.bus}
+            <Text style={Noti_styles.toptext4}>
+              {
+                language === 'english'? ' will arrive ': '離抵達' 
+              }
+            </Text> 
+            {props.from}
+          </Text>
+          <Text style={Noti_styles.toptext3}>
+          {
+            language === 'english'? 'in': '還剩' 
+            }
           <Text style={Noti_styles.toptext5}> {/*TODO*/'5'} </Text>
-          分鐘</Text>
+          {
+            language === 'english'? 'mins': '分鐘' 
+            }
+          </Text>
         </View>
         
         <TouchableOpacity 
@@ -236,7 +256,11 @@ const Reminder = props => {
           style={Noti_styles.del} 
         >
           <MaterialIcons style={Noti_styles.del_icon} name="alarm-off" size={45} color="black" />
-          <Text style={Noti_styles.del_text}>取消提醒</Text>
+          <Text style={Noti_styles.del_text}>
+          {
+            language === 'english'? 'Cancel': '取消提醒' 
+          }
+          </Text>
         </TouchableOpacity>
       </View>
 
@@ -251,7 +275,11 @@ const Reminder = props => {
       
       {expanded && (<>
         <View style={Noti_styles.time}>
-          <Text style={Noti_styles.toptext6}>在公車抵達前 </Text>
+          <Text style={Noti_styles.toptext6}> 
+          {
+            language === 'english'? 'Remide me ': '在公車抵達前' 
+          }
+          </Text>
           <SelectList 
             style={Noti_styles.time_select}
             setSelected={val => dispatch({
@@ -268,11 +296,19 @@ const Reminder = props => {
             boxStyles={{width:70}}
             dropdownStyles={{width:70}}
           />
-          <Text style={Noti_styles.toptext6}> 分鐘提醒</Text>
+          <Text style={Noti_styles.toptext6}>
+          {
+            language === 'english'? ' before the bus arrive': '分鐘提醒' 
+          }
+          </Text>
         </View>
       
         <View>
-          <Text style={Noti_styles.rpt_alarm_text}>重複提醒：</Text>  
+          <Text style={Noti_styles.rpt_alarm_text}>
+          {
+            language === 'english'? 'Repeat:': '重複提醒：' 
+          }
+          </Text>  
           <View style={Noti_styles.rpt_alarm_week}>{
             [...Array(7).keys()].map(day =>
               <TouchableOpacity 
@@ -287,9 +323,13 @@ const Reminder = props => {
                 } 
                 style={[
                   Noti_styles.rpt_alarm_btn, 
-                {backgroundColor: (props.repeat[day].on ? '#07B' : '#888')}
+                {backgroundColor: (props.repeat[day].on ? color : '#888')}
                 ]}>
-                  <Text style={Noti_styles.rpt_alarm_day}>{chineseDay[day]}</Text>
+                  <Text style={Noti_styles.rpt_alarm_day}>
+                    {
+                    language === 'english'? englishDay[day]: chineseDay[day]
+                    }
+                    </Text>
                 </TouchableOpacity>
             )
           }</View>
@@ -298,15 +338,17 @@ const Reminder = props => {
               style={Noti_styles.hour_select}
               setSelected={val => dispatch({
                 type: 'setReminderHour',
+                id: props.id,
                 hour: val
               })}
+
               data={hour_data} 
               save="value"
               search={false}
-              placeholder={"00"}
+              placeholder={reminder[props.id].hour %12}
               maxHeight={150}
               dropdownShown={false}
-              defaultOption={{key: '00', value: '00'}}
+              // defaultOption={{key: '00', value: '00'}}
               boxStyles={{width:65}}
               dropdownStyles={{width:65}}
             />
@@ -315,15 +357,16 @@ const Reminder = props => {
               style={Noti_styles.minute_select}
               setSelected={val => dispatch({
                 type: 'setReminderMinute',
+                id: props.id,
                 minute: val
               })} 
               data={minute_data} 
               save="value"
               search={false} 
-              placeholder={"00"}
+              placeholder={reminder[props.id].minute}
               maxHeight={150}
               dropdownShown={false}
-              defaultOption={{key: '00', value: '00'}}
+              // defaultOption={{key: '00', value: '00'}}
               boxStyles={{width:65}}
               dropdownStyles={{width:65}}
             />
@@ -333,6 +376,7 @@ const Reminder = props => {
               setSelected={val => {
                 dispatch({
                   type: 'setReminderHour',
+                  id: props.id,
                   hour: val === 'am' 
                     ? props.hour % 12 
                     : props.hour % 12 + 12
@@ -341,14 +385,17 @@ const Reminder = props => {
               data={ampm_data} 
               save="value"
               search={false}
-              placeholder={"am"}
+              placeholder={reminder[props.id].hour > 12 ? 'pm' : 'am'}
               maxHeight={150}
               dropdownShown={false}
-              defaultOption={{key: 'am', value: 'am'}}
+              // defaultOption={{key: 'am', value: 'am'}}
               boxStyles={{width:65,margin:0,}}
               dropdownStyles={{width:65}}
             />
-            <Text style={[Noti_styles.repeat_select_text, {color:"red"}]}>  提醒</Text>
+            <Text style={[Noti_styles.repeat_select_text, {color:"red"}]}>
+            {
+              language === 'english'? 'Remind': '提醒' 
+            } </Text>
           </View>
         </View>
       

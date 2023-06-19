@@ -4,6 +4,7 @@ import {Animated, PanResponder} from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { MaterialIcons } from '@expo/vector-icons'; 
 import {Ionicons} from '@expo/vector-icons/Ionicons';
+import { useData, useDataDispatch } from './DataContext.js'
 
 import Bus_tile from './Bus_tile.js';
 const BusDetailCard = () => {
@@ -36,6 +37,8 @@ text: {
 
 
 const Bus_card = () => {
+  const {settings: {theme, language, color}, colors} = useData();
+
   const screenHeight = Dimensions.get('window').height;
   const maxCardHeight = 0.5 * screenHeight;
   const screenWidth = Dimensions.get('window').width;
@@ -87,6 +90,7 @@ const Bus_card = () => {
             </View>
             <View></View>
           </ScrollView>
+          
         </View>
       </Animated.View>
 

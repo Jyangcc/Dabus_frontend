@@ -208,7 +208,9 @@ const styles = StyleSheet.create({
 });
 
 function Home({navigation}){
-  const {settings:{color}} = useData();
+  // const {settings:{color}} = useData();
+  const {settings: {theme, language, color}, colors} = useData();
+
   const {treePercents} = useData();
   const dispatch = useDataDispatch();
   const screenWidth = Dimensions.get('window').width;
@@ -239,7 +241,9 @@ function Home({navigation}){
         <TouchableOpacity  style={{backgroundColor: color, width:344, height:44, margin: 20, borderRadius: 10, opacity: 0.6,justifyContent :'left',flexDirection:'row',alignItems: 'center',}} onPress={() => navigation.navigate('Search')}>
           <Fontisto style={{marginLeft:10}} name="search" size={24} color="white" />
           <Text style = {{fontSize: 20,fontWeight: "bold",color: "#FFF",marginLeft:10}}> 
-            現在想去哪
+          {
+            language === 'english'? 'Go to ...': '現在想去哪' 
+          }
           </Text>
         </TouchableOpacity>
 

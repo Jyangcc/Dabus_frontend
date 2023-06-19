@@ -10,7 +10,9 @@ import { useData, useDataDispatch } from './DataContext.js'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const FavoriteCard = props => {
-    const {settings:{color}} = useData();
+    // const {settings:{color}} = useData();
+    const {settings: {theme, language, color}, colors} = useData();
+
     const dispatch = useDataDispatch();
     const handleSearchPress = () => {
       // TODO
@@ -63,11 +65,23 @@ const FavoriteCard = props => {
     return(
       <TouchableOpacity onPress={handleSearchPress} style={Fav_styles.card}>
           <View>
-            <Text style={Fav_styles.to}>前往 <Text style={Fav_styles.dest}>{props.name}</Text></Text>
+            <Text style={Fav_styles.to}>
+            {
+            language === 'english'? 'To ': '前往' 
+            } <Text style={Fav_styles.dest}>{props.name}</Text></Text>
             <Text style={Fav_styles.highLight}>{/*TODO*/'Bus1'}
-              <Text style={Fav_styles.plainText}> 離抵達 </Text> 
+              <Text style={Fav_styles.plainText}> 
+              {
+            language === 'english'? ' will arrive ': '離抵達' 
+            } </Text> 
               <Text style={Fav_styles.highLight}>{/*TODO*/'Here'}</Text>
-              <Text style={Fav_styles.plainText}> 還剩{/*TODO*/'?'}分鐘</Text>
+              <Text style={Fav_styles.plainText}> 
+              {
+                language === 'english'? ' in ': '還剩' 
+              }{/*TODO*/'?'}
+              {
+                language === 'english'? ' mins': '分鐘' 
+              }</Text>
             </Text>
 
           </View>
@@ -77,7 +91,10 @@ const FavoriteCard = props => {
             style={{right: 20, position: 'absolute'}} 
           >
             <MaterialCommunityIcons name="star-remove" size={40} color="#0005"/>
-            <Text style={{fontSize:10} } >取消最愛</Text>
+            <Text style={{fontSize:10} } >
+            {
+            language === 'english'? 'cancel': '取消最愛' 
+            }</Text>
           </TouchableOpacity> 
       </TouchableOpacity>
     )

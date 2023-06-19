@@ -274,6 +274,7 @@ function dataReducer(data, action) {
       };
     }
     case 'setReminderMinute':{
+      console.log(action)
       return {
         ...data, 
         reminder: data.reminder.map(rem => {
@@ -287,6 +288,7 @@ function dataReducer(data, action) {
     }
     case 'toggleReminderRepeatDay':{
       console.log('Toggling ', action.day);
+      console.log(action)
       return {
         ...data, 
         reminder: data.reminder.map(rem => {
@@ -424,7 +426,7 @@ const initialData = {
   newColor: null,
   colors: [
     {color: '#07B', unlocked: true},
-    {color: '#D83', unlocked: false},
+    {color: '#D83', unlocked: true},
     {color: '#56B', unlocked: false},
     {color: '#39B', unlocked: false},
     {color: '#969', unlocked: false},

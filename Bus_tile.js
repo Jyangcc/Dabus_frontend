@@ -10,7 +10,7 @@ import { useData } from './DataContext.js';
 
 const Bus_tile = (props) => {
     const [remind, setremind] = useState(false);
-    const {settings:{color}} = useData();
+    const {settings: {theme, language, color}, colors} = useData();
     const handleSetRemindPress = () => {
       setremind(!remind);
     };
@@ -22,12 +22,27 @@ const Bus_tile = (props) => {
           
           <View style={Bus_tile_styles.bus}>
             <Text style={Bus_tile_styles.text2}>{props.bus_name}
-              <Text style={Bus_tile_styles.text1}>往 <Text style={Bus_tile_styles.text2}>{props.dest}</Text></Text>
+              <Text style={Bus_tile_styles.text1}>
+              {
+                language === 'english'? ' To ': '往' 
+              }
+               <Text style={Bus_tile_styles.text2}>
+                {props.dest}
+                </Text></Text>
             </Text> 
             <Text>
-              <Text style={Bus_tile_styles.text4}> 將在 </Text> 
-              <Text style={Bus_tile_styles.text3}>{props.arrive_time} </Text>
-              <Text style={Bus_tile_styles.text4}>分鐘後抵達 </Text>
+              <Text style={Bus_tile_styles.text4}>{
+                language === 'english'? ' arrive in ': '將在' 
+              }
+                </Text> 
+              <Text style={Bus_tile_styles.text3}>
+                {props.arrive_time} 
+                </Text>
+              <Text style={Bus_tile_styles.text4}>
+              {
+                language === 'english'? '': '分鐘後抵達' 
+              }
+               </Text>
               <Text style={Bus_tile_styles.text5}>{props.depart_stop} </Text>            
             </Text>
           </View>

@@ -73,16 +73,16 @@ const FavoriteCard = props => {
             {
             language === 'english'? 'To ': '前往' 
             } <Text style={Fav_styles.dest}>{props.name}</Text></Text>
-            <Text style={Fav_styles.highLight}>{/*TODO*/'Bus1'}
+            <Text style={Fav_styles.highLight}>{/*TODO*/'藍線1'}
               <Text style={Fav_styles.plainText}> 
               {
             language === 'english'? ' will arrive ': '離抵達' 
             } </Text> 
-              <Text style={Fav_styles.highLight}>{/*TODO*/'Here'}</Text>
+              <Text style={Fav_styles.highLight}>{/*TODO*/'清華大學'}</Text>
               <Text style={Fav_styles.plainText}> 
               {
                 language === 'english'? ' in ': '還剩' 
-              }{/*TODO*/'?'}
+              }{/*TODO*/' 5 '}
               {
                 language === 'english'? ' mins': '分鐘' 
               }</Text>

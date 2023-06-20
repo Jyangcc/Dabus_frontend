@@ -155,7 +155,7 @@ const Bus_tile = (props) => {
     },
     bus_icon:{
       marginTop:5,
-      marginLeft:-50,
+      marginLeft:-10,
     }
   });
 

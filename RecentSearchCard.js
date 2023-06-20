@@ -169,11 +169,16 @@ const newRoute = async (locationName) => {
             buses_routes: ['new_routes().data[1].Stops'], // 可能的公車路線
             busdata : new_routes().data,
           })
+          
+          console.log("Done ")
+          // await dispatch({
+          //   type: 'addRecentsearch',
+          //   recentlySearched:name
+          // })
+
           dispatch({
             type: 'todb'
           })
-          ;
-          console.log("Done ")
 
           navigation.navigate('BusDtail') 
           }}>

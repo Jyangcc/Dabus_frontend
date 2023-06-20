@@ -6,19 +6,44 @@ import { MaterialIcons } from '@expo/vector-icons';
 import {Ionicons} from '@expo/vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 
-import { useData } from './DataContext.js';
+import { useData, useDataDispatch } from './DataContext.js';
 
 const Bus_tile = (props) => {
     const [remind, setremind] = useState(false);
+    const dispatch = useDataDispatch();
     const {settings: {theme, language, color}, colors} = useData();
     const {present_location, destination_location ,p_lon ,p_lat,d_lon,d_lat,buses_routes,busdata} = useData();
     
     const handleSetRemindPress = () => {
+      dispatch({
+        type: 'addReminder',
+        reminder:{
+          id : 4,
+          bus: 'Bus1',
+          from: '清華大學',
+          to: destination_location,
+          repeat: [
+            {day: 0, on: false},
+            {day: 1, on: false},
+            {day: 2, on: false},
+            {day: 3, on: false},
+            {day: 4, on: false},
+            {day: 5, on: false},
+            {day: 6, on: false},
+          ],
+          hour: 0,
+          minute: 0,
+          remind: 10
+        }
+      })
+      dispatch({
+        type: 'todb'
+      })
       setremind(!remind);
     };
     console.log(busdata,'data')
     return(
-      <TouchableOpacity onPress={handleSetRemindPress} style={Bus_tile_styles.container}>
+      <TouchableOpacity style={Bus_tile_styles.container}>
         <MaterialCommunityIcons style={Bus_tile_styles.bus_icon} name="bus-stop" size={60} color={color} />
 
         <View style={Bus_tile_styles.bus_and_del}>

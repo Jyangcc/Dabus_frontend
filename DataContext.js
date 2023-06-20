@@ -273,6 +273,35 @@ function dataReducer(data, action) {
         
       };
     }
+    
+    case 'addRecentsearch':{
+      return {
+        ...data, 
+        recentlySearched : data.recentlySearched.map(c => {
+          if (c === action.recentlySearched)  
+            return {
+              ...c,
+            }
+          else 
+            return
+              [
+                ...data.recentlySearched,
+                
+                  action.recentlySearched
+                
+              ]
+            ;
+        })
+        // [
+        //   ...data.recentlySearched,
+          
+        //     action.recentlySearched
+          
+        // ]
+        
+      };
+    }
+
     case 'removeReminder':{
       return {
         ...data,

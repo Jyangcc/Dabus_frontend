@@ -195,7 +195,7 @@ const Reminder = props => {
       position:"relative"
     },
     bus_and_del:{
-      marginLeft:0,
+      marginLeft:30,
       marginRight:15,
       justifyContent: 'center',
       flexDirection: 'row',

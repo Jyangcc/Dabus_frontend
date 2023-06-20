@@ -14,13 +14,25 @@ import {
 
 import RecentSearchCard from './RecentSearchCard';
 
-import {useData} from './DataContext.js'
+import {useData, useDataDispatch} from './DataContext.js'
 
+
+// const dispatch = useDataDispatch();
+
+// addRecentsearch
 const SearchAnswer = ({navigation,name}) => {
     const {reminder} = useData();
+    const dispatch = useDataDispatch();
     return (
         // <SafeAreaView style={styles.container}>
-             <RecentSearchCard name= {name} navigation = {navigation}/>
+             <RecentSearchCard 
+            //  onpress={
+            //     dispatch({
+            //         type: 'addRecentsearch',
+            //         recentlySearched:name
+            //       })
+            // } 
+            name= {name} navigation = {navigation}/>
         // </SafeAreaView>
     );
   };

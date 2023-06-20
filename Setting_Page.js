@@ -108,7 +108,9 @@ const Setting_Page = () => {
           }}>
 
             <Text style={{ lineHeight: 30, fontSize: 30, marginLeft: 10, color: mode_color }}>
-              登入帳號
+            {
+                  language === 'english'? 'Log in': '登入帳號' 
+                }
             </Text>
 
           </TouchableOpacity>
@@ -123,7 +125,9 @@ const Setting_Page = () => {
 
         <View style={[styles.container_darkmode, { marginTop: 30 }]} >
           <Ionicons name="moon" size={30} style={{ color: mode_color }} />
-          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>暗色主題</Text>
+          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>{
+                language === 'english'? 'Darkmode': '暗色主題' 
+              }</Text>
 
           <Switch
             style={{ top: 0, left: screenWidth * 0.7, position: 'absolute' }}
@@ -133,9 +137,12 @@ const Setting_Page = () => {
             // value={on}
             // onValueChange={handle}
             value={theme === 'dark'}
-            onValueChange={() => {
-              dispatch({
+            onValueChange={async() => {
+              await dispatch({
                 type: 'toggleTheme'
+              })
+              dispatch({
+                type: 'todb'
               })
             }}
           />
@@ -145,7 +152,9 @@ const Setting_Page = () => {
 
         <View style={{ marginTop: 30, alignItems: "center", flexDirection: "row", }}>
           <Entypo name="globe" size={30} style={{ color: mode_color }} />
-          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>語言</Text>
+          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>{
+                language === 'english'? 'Lanuage': '語言' 
+              }</Text>
           <View style={{ top: 0, left: screenWidth * 0.5, position: 'absolute' }}>
             <SelectDropdown
               // Todo 
@@ -160,10 +169,13 @@ const Setting_Page = () => {
                 borderColor: '#444',
               }}
 
-              onSelect={selectedItem => {
-                dispatch({
+              onSelect={async selectedItem => {
+                await dispatch({
                   type: 'setLanguage',
                   language: selectedItem === 'English' ? 'english' : 'chinese'
+                })
+                dispatch({
+                  type: 'todb'
                 })
                 console.log("select language")
                 console.log(selectedItem)
@@ -188,7 +200,9 @@ const Setting_Page = () => {
         <View style={[styles.container_col, { marginTop: 30 }]}>
           <View style={{ alignItems: "center", flexDirection: "row" }}>
             <Ionicons name="color-fill" size={30} style={{ color: mode_color }} />
-            <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>主題色</Text>
+            <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>{
+                language === 'english'? 'Theme coloe': '主題色' 
+              }</Text>
           </View>
 
           <View style={{ alignItems: "center", flexDirection: "row", marginTop: 10 }}>
@@ -197,11 +211,14 @@ const Setting_Page = () => {
                 c.unlocked &&
                 <TouchableOpacity
                   key={c.color}
-                  onPress={() =>
-                    dispatch({
+                  onPress={async () =>{
+                    await dispatch({
                       type: 'setColor',
                       color: c.color,
                     })
+                    dispatch({
+                      type: 'todb'
+                    })}
                   }
                   style={[styles.roundButton, { backgroundColor: c.color }]}>
                 </TouchableOpacity>
@@ -213,13 +230,19 @@ const Setting_Page = () => {
 
         <View style={{ marginTop: 30, alignItems: "center", flexDirection: "row", }}>
           <Ionicons name="arrow-redo" size={30} style={{ color: mode_color }} />
-          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>分享給好友</Text>
+          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>{
+            
+          language === 'english'? 'Share': '分享給好友' 
+              }</Text>
 
         </View>
 
         <View style={{ marginTop: 30, alignItems: "center", flexDirection: "row", }}>
           <FontAwesome name="thumbs-up" size={30} style={{ color: mode_color }} />
-          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>幫我們評分</Text>
+          <Text style={{ fontSize: 30, marginLeft: 10, color: mode_color }}>
+          {
+                language === 'english'? 'Rate this App': '幫我們評分' 
+              }</Text>
 
         </View>
       </View>

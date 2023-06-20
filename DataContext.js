@@ -64,7 +64,7 @@ export function DataProvider({ children }) {
     // })(); // don't remove the ()
   
     // if (localData.loggedIn) {
-      if(true){
+    if(true){
       const uuid = 'ycc_test_1'
       try {
         const dbData = await getDataFromDB(uuid);//
@@ -178,13 +178,19 @@ export function useDataDispatch() {
 }
 
 function dataReducer(data, action) {
+  console.log(data)
 
   switch (action.type) {
     case 'todb':{
       writeDataToDB('ycc_test_1',data);
       return data;
     }
-    
+    case'busdata':{ 
+      return{
+        ...data,
+        busdata : action.data
+      };
+    }
     case 'overwrite': {
       return action.data;
     }
@@ -404,7 +410,7 @@ const initialData = {
   favorite: [
     '新竹火車站',
     '馬偕醫院',
-    '123'
+    
   ],
   recentlySearched: [
     '東門市場',

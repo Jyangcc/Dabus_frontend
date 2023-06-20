@@ -151,7 +151,7 @@ const Bus_card = (props) => {
                 {stopsData.map((stop, index) => (
                   <View key={index} style={bus_stop_styles.row}>
                     <Text style={bus_stop_styles.cell}>{stop.name}</Text>
-                    <Text style={bus_stop_styles.cell}>{stop.arriveTime}</Text>
+                    <Text style={bus_stop_styles.cell}>{stop.arriveTime/60}</Text>
                   </View>
                 ))}
               </ScrollView>

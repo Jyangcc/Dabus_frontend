@@ -81,6 +81,11 @@ const RecentSearchCard = ({name, navigation}) => {
         const resp = await fetch(url);
         const data = await resp.json();
         console.log(data,'get bus data ');
+        dispatch({
+          type: 'busdata',
+          busdata : data.data
+        })
+        ;
         return data;
       }).catch((err) => {
           console.log('qwq');
@@ -153,7 +158,7 @@ const newRoute = async (locationName) => {
         <TouchableOpacity onPress={async ()=> {
           console.log("start ")
           
-          dispatch({
+          await dispatch({
             type: 'setRouteData',
             present_location: '清華大學',
             destination_location: name,
@@ -163,7 +168,11 @@ const newRoute = async (locationName) => {
             d_lat: set_lat(),   // 目的地位置緯度
             buses_routes: ['new_routes().data[1].Stops'], // 可能的公車路線
             busdata : new_routes().data,
-          });
+          })
+          dispatch({
+            type: 'todb'
+          })
+          ;
           console.log("Done ")
 
           navigation.navigate('BusDtail') 

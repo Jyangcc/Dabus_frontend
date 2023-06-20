@@ -6,10 +6,12 @@ import {SafeAreaView,Dimensions, StyleSheet,TouchableOpacity, TextInput, View, T
 import BusDetailCard from './BusDetailCard';
 import MapView from 'react-native-maps';
 import {useData, useDataDispatch} from './DataContext.js'
+// import { useData } from './DataContext.js';
 
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+
 
 const BusDetailContainer = () => {
     
